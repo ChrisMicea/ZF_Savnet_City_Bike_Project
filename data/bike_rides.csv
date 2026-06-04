@@ -1,101 +1,101 @@
-ride_id,bike_id,start_station,end_station,start_time,end_time,distance_km,duration_minutes,user_type
-RIDE-3942,Bike-4039,East Terminal,,2025-10-13 21:00:00,2025-10-13 21:23:06,6.12,23.1,Member
-RIDE-2391,Bike-4479,Tech District,,2025-06-24 21:00:00,2025-06-24 22:01:06,18.5,61.1,Admin
-RIDE-4520,Bike-4117,East Terminal,City Hall,2025-07-27 21:00:00,2025-07-27 21:14:00,4.78,14.0,Tourist
-RIDE-5794,Bike-3921,,Tech District,2025-10-16 21:00:00,2025-10-16 21:38:30,12.16,38.5,Robot
-RIDE-462,Bike-1343,East Terminal,Downtown Plaza,2026-03-19 21:00:00,2026-03-19 21:33:48,7.8,33.8,Tourist
-RIDE-7733,Bike-2241,South Gardens,,2025-06-09 21:00:00,2025-06-09 21:03:00,0.89,3.0,
-RIDE-19,Bike-3286,East Terminal,City Hall,2025-07-05 21:00:00,2025-07-05 21:14:12,5.04,14.2,
-RIDE-7082,Bike-4632,,West End,2025-10-10 21:00:00,2025-10-10 21:24:30,8.06,24.5,
-RIDE-3740,,City Hall,South Gardens,2025-12-10 21:00:00,2025-12-10 21:15:42,6.6,15.7,Casual
-RIDE-7252,Bike-4852,,River Park,2026-03-04 21:00:00,2026-03-04 21:34:42,11.39,34.7,Member
-RIDE-7202,Bike-1553,,Tech District,2025-07-27 21:00:00,2025-07-27 21:30:42,11.42,30.7,Member
-RIDE-927,Bike-2371,East Terminal,River Park,2025-10-31 21:00:00,2025-10-31 21:53:00,19.3,53.0,Admin
-RIDE-1212,Bike-1875,South Gardens,Tech District,2025-06-29 21:00:00,2025-06-29 22:27:06,18.7,87.1,Admin
-RIDE-2118,Bike-3981,City Hall,River Park,2025-06-20 21:00:00,2025-06-20 21:30:00,14.17,30.0,VIP
-RIDE-8575,Bike-699,Central Station,,2025-12-26 21:00:00,2025-12-26 21:56:00,11.72,56.0,Casual
-RIDE-7447,,West End,Tech District,2025-11-16 21:00:00,2025-11-16 21:55:48,17.59,55.8,Tourist
-RIDE-3262,Bike-2739,River Park,,2025-07-26 21:00:00,2025-07-26 21:34:18,9.87,34.3,VIP
-RIDE-2931,Bike-4249,West End,City Hall,2025-10-07 21:00:00,2025-10-07 22:22:24,18.01,82.4,Casual
-RIDE-5522,Bike-3760,River Park,West End,2026-04-07 21:00:00,2026-04-07 21:37:24,8.22,37.4,Casual
-RIDE-9776,Bike-4230,,East Terminal,2025-09-26 21:00:00,2025-09-26 21:35:24,14.36,35.4,Casual
-RIDE-8821,Bike-4455,,West End,2025-10-29 21:00:00,2025-10-29 21:52:18,14.22,52.3,VIP
-RIDE-5134,Bike-2749,North Market,River Park,2025-11-04 21:00:00,2025-11-04 22:18:48,19.24,78.8,Robot
-RIDE-9887,,River Park,South Gardens,2025-10-16 21:00:00,2025-10-16 21:01:30,0.55,1.5,Robot
-RIDE-8577,Bike-3364,Downtown Plaza,,2026-04-03 21:00:00,2026-04-03 21:48:48,12.72,48.8,Admin
-RIDE-3114,Bike-1499,,South Gardens,2025-06-06 21:00:00,2025-06-06 21:22:36,5.42,22.6,Member
-RIDE-9449,Bike-846,South Gardens,River Park,2026-04-22 21:00:00,2026-04-22 21:38:36,7.8,38.6,Tourist
-RIDE-4946,Bike-3943,University,South Gardens,2025-11-24 21:00:00,2025-11-24 21:40:48,9.32,40.8,Admin
-RIDE-5564,Bike-498,River Park,North Market,2026-02-06 21:00:00,2026-02-06 21:35:30,14.89,35.5,Tourist
-RIDE-1523,Bike-3902,West End,West End,2026-03-08 21:00:00,2026-03-08 22:29:12,17.86,89.2,Tourist
-RIDE-1541,Bike-1092,River Park,City Hall,2025-12-02 21:00:00,2025-12-02 21:09:06,3.0,9.1,Member
-RIDE-2282,Bike-2458,University,Central Station,2026-03-19 21:00:00,2026-03-19 21:03:18,1.12,3.3,Admin
-RIDE-1762,Bike-2813,Tech District,,2025-11-01 21:00:00,2025-11-01 21:02:48,0.63,2.8,Casual
-RIDE-9005,Bike-758,South Gardens,University,2026-05-04 21:00:00,2026-05-04 21:27:30,9.57,27.5,Robot
-RIDE-4259,Bike-4199,City Hall,River Park,2025-06-25 21:00:00,2025-06-25 21:16:06,6.79,16.1,Member
-R IDE-2849,Bike- 1384,Ri ver Park,Cen tral Station,2026-02-10  21:00:00, 2026-02-10 21 :24:54,10.75,24.9,
-RIDE-4549,Bike-1053,,River Park,2026-02-02 21:00:00,2026-02-02 22:04:54,16.9,64.9,Robot
-RIDE-4364,Bike - 2047,T ec h District,East Terminal,2 025- 1 2  - 13  21:00:00,20 25-12-13 21:51:48,10.75,51.8,A  dmin
-RIDE-8338,Bike-3093,City Hall,,2025-12-19 21:00:00,2025-12-19 21:37:24,16.49,37.4,Admin
-RIDE-9097,Bike-1833,South Gardens,City Hall,2025-06-13 21:00:00,2025-06-13 21:33:00,10.76,33.0,
-RIDE-8542,Bike-3913,South Gardens,Tech District,2025-07-17 21:00:00,2025-07-17 22:17:36,16.38,77.6,Member
-RIDE-6241,Bike-3697,South Gardens,River Park,2026-04-05 21:00:00,2026-04-05 22:27:42,17.7,87.7,Robot
-RIDE-2767,Bike-3995,,East Terminal,2025-09-28 21:00:00,2025-09-28 21:23:48,7.92,23.8,Admin
-RIDE-4081,Bike-49,,South Gardens,2026-05-07 21:00:00,2026-05-07 21:25:48,12.17,25.8,Robot
-RIDE-6768,Bike-3096,,Central Station,2025-06-08 21:00:00,2025-06-08 21:29:12,10.33,29.2,VIP
-RIDE-196,Bike-120,University,Tech District,2025-06-29 21:00:00,2025-06-29 21:48:24,13.74,48.4,Tourist
-RIDE-2460,Bike-675,Downtown Plaza,,2025-10-04 21:00:00,2025-10-04 21:54:00,19.22,54.0,Admin
-RIDE-9849,Bike-4450,University,,2025-10-05 21:00:00,2025-10-05 21:26:30,9.35,26.5,Robot
-RIDE-3551,Bike-2826,Downtown Plaza,Central Station,2025-09-15 21:00:00,2025-09-15 21:16:48,4.55,16.8,Tourist
-RIDE-8246,Bike-226,East Terminal,South Gardens,2026-04-11 21:00:00,2026-04-11 22:09:42,15.17,69.7,Member
-RIDE-2760,Bike-4536,North Market,Tech District,2025-12-09 21:00:00,2025-12-09 21:17:54,3.95,17.9,Tourist
-RIDE-751,,,East Terminal,2025-08-09 21:00:00,2025-08-09 21:29:48,6.06,29.8,Admin
-RIDE-7547,,West End,,2025-11-25 21:00:00,2025-11-25 21:55:00,12.53,55.0,Member
-RIDE-9061,,West End,East Terminal,2025-09-26 21:00:00,2025-09-26 21:45:24,13.32,45.4,
-RIDE-6315,Bike-230,North Market,,2025-07-21 21:00:00,2025-07-21 21:19:06,3.89,19.1,
-RIDE-6768,Bike-2569,,River Park,2026-05-10 21:00:00,2026-05-10 21:25:06,10.77,25.1,Tourist
-RIDE-6151,Bike-4072,City Hall,,2025-07-11 21:00:00,2025-07-11 21:08:30,3.04,8.5,Tourist
-RIDE-5110,Bike-3534,,West End,2026-05-21 21:00:00,2026-05-21 21:03:42,1.28,3.7,Admin
-RIDE-5566,,University,Tech District,2026-02-14 21:00:00,2026-02-14 21:29:42,11.86,29.7,VIP
-RIDE-9788,Bike-2051,Tech District,West End,2025-10-14 21:00:00,2025-10-14 21:37:18,8.64,37.3,Admin
-RIDE-8209,Bike-2837,East Terminal,Tech District,2026-03-18 21:00:00,2026-03-18 21:24:42,12.23,24.7,
-RIDE-2203,Bike-1218,River Park,Downtown Plaza,2025-11-29 21:00:00,2025-11-29 21:33:48,11.59,33.8,Admin
-RIDE-4158,Bike-2568,Tech District,South Gardens,2026-05-08 21:00:00,2026-05-08 21:20:36,6.45,20.6,Admin
-RIDE-7341,Bike-828,University,Central Station,2025-08-09 21:00:00,2025-08-09 21:47:30,10.83,47.5,Robot
-RIDE-5321,,River Park,West End,2026-03-27 21:00:00,2026-03-27 21:11:48,3.06,11.8,Casual
-RIDE-1305,Bike-3448,Tech District,South Gardens,2026-04-02 21:00:00,2026-04-02 21:32:00,7.6,32.0,Tourist
-RIDE-2070,Bike-4899,,,2025-08-01 21:00:00,2025-08-01 21:53:12,18.28,53.2,VIP
-RIDE-3173,,Tech District,City Hall,2025-07-25 21:00:00,2025-07-25 22:14:36,17.78,74.6,Admin
-RIDE-9479,Bike-2044,Tech District,Downtown Plaza,2025-09-05 21:00:00,2025-09-05 21:52:00,12.2,52.0,Robot
-RIDE-8178,Bike-3438,Tech District,,2025-09-24 21:00:00,2025-09-24 21:06:18,2.57,6.3,Robot
-RIDE-5119,Bike-1162,Downtown Plaza,Downtown Plaza,2025-10-27 21:00:00,2025-10-27 21:18:36,6.12,18.6,Admin
-RIDE-6150,Bike-2326,North Market,East Terminal,2025-09-08 21:00:00,2025-09-08 21:19:12,8.96,19.2,VIP
-RIDE-9184,,,South Gardens,2025-11-05 21:00:00,2025-11-05 21:23:54,5.59,23.9,Tourist
-RIDE-6047,Bike-4274,East Terminal,Central Station,2025-10-09 21:00:00,2025-10-09 22:20:00,19.1,80.0,Admin
-RIDE-7412,Bike-3960,East Terminal,,2026-02-07 21:00:00,2026-02-07 21:40:24,18.15,40.4,Casual
-RIDE-6606,Bike-4629,Downtown Plaza,West End,2026-06-03 21:00:00,2026-06-03 21:26:06,5.64,26.1,VIP
-RIDE-9544,Bike-4575,,Central Station,2025-06-09 21:00:00,2025-06-09 21:26:36,6.1,26.6,Tourist
-RIDE-6573,Bike-3859,North Market,Downtown Plaza,2025-09-21 21:00:00,2025-09-21 21:37:42,13.19,37.7,Casual
-RIDE-2157,Bike-1291,North Market,South Gardens,2025-12-20 21:00:00,2025-12-20 21:44:00,18.26,44.0,
-RIDE-687,Bike-3176,North Market,East Terminal,2025-09-23 21:00:00,2025-09-23 21:30:12,9.68,30.2,Casual
-RIDE-6561,Bike-1489,University,River Park,2026-05-14 21:00:00,2026-05-14 21:39:54,8.2,39.9,Admin
-RIDE-6526,Bike-1977,Tech District,City Hall,2025-08-23 21:00:00,2025-08-23 21:36:00,12.58,36.0,
-RIDE-8171,Bike-46,North Market,Central Station,2026-05-23 21:00:00,2026-05-23 21:21:18,7.45,21.3,Member
-RIDE-7109,Bike-2456,,City Hall,2025-10-27 21:00:00,2025-10-27 21:19:36,9.43,19.6,Admin
-RIDE-1394,Bike-3429,Downtown Plaza,River Park,2026-04-29 21:00:00,2026-04-29 21:08:12,2.34,8.2,Casual
-RIDE-8280,Bike-3933,City Hall,West End,2025-10-28 21:00:00,2025-10-28 21:35:48,7.73,35.8,Robot
-RIDE-8717,,South Gardens,University,2025-07-08 21:00:00,2025-07-08 21:16:06,7.23,16.1,Robot
-RIDE-9157,Bike-3244,East Terminal,Downtown Plaza,2026-02-07 21:00:00,2026-02-07 21:29:06,7.67,29.1,Member
-RIDE-7889,Bike-3774,Tech District,West End,2025-10-06 21:00:00,2025-10-06 21:31:06,7.84,31.1,Robot
-RIDE-1215,Bike-181,University,City Hall,2025-10-14 21:00:00,2025-10-14 21:41:18,8.87,41.3,Tourist
-RIDE-762,,Tech District,T ech   District,2026-03- 2 0 21: 00:00,2  0 26 -03-2 0 22:01:54,19 .03,61.9,Casual
-RIDE-9689,Bike-4890,East Terminal,City Hall,2025-12-31 21:00:00,2025-12-31 21:33:30,16.4,33.5,Member
-RIDE-6690,Bike-2162,Ce n t   r a l Station,Downtown Plaza,20 26- 03-04 21:00:00,2026-03-04 21:59:06, 16.53,59.1,
-RIDE-9890,Bike-1905,,East Terminal,2025-12-08 21:00:00,2025-12-08 21:35:06,17.18,35.1,Casual
-RIDE-4067,Bike-1579,Downtown Plaza,South Gardens,2025-06-17 21:00:00,2025-06-17 21:43:42,14.17,43.7,Robot
-RIDE-8630,  Bike-2241,,Central Stat ion,2025-06-3  0 21:00:00,2025- 06-  30 22:06:12,15.91,66.2,T  o urist
-RIDE-8974,Bike-4278,City Hall,University,2025-07-25 21:00:00,2025-07-25 22:01:36,13.68,61.6,Admin
-RIDE-1366,Bike-1857,River Park,South Gardens,2025-08-22 21:00:00,2025-08-22 21:22:18,10.47,22.3,VIP
-RIDE-6234,Bike-4260,East Terminal,,2026-03-08 21:00:00,2026-03-08 21:49:36,13.63,49.6,
-RIDE-884,Bike-4749,Downtown Plaza,Downtown Plaza,2026-01-21 21:00:00,2026-01-21 21:13:54,6.18,13.9,Admin
-RIDE-7508,Bike-37,Tech District,West End,2026-01-26 21:00:00,2026-01-26 21:25:12,9.3,25.2,Admin
+ride_id,bike_id,user_type,start_station,end_station,start_time,end_time,duration_minutes,distance_km,status
+RIDE-4162,Bike-1570,Robot,South Gardens,Tech District,2025-06-06 21:53:04,2025-06-06 22:56:40,63.6,15.04,Unvalidated
+RIDE-5014,Bike-3828,Casual,,River Park,2026-03-14 21:53:04,2026-03-14 22:14:04,21.0,9.59,Unvalidated
+RIDE-4895,Bike-1238,,City Hall,University,2025-09-13 21:53:04,2025-09-13 22:47:28,54.4,13.29,Unvalidated
+RIDE-3162,Bike-4406,Member,University,North Market,2026-04-29 21:53:04,2026-04-29 22:43:16,50.2,11.77,Unvalidated
+RI  DE-488,Bike -3271,Robot,City  Hall,North Market,20 26-04-28 21:53:04,2026- 04-28 22:57:28,64.4,18.84,Unvalidated
+RIDE-719,Bike-1088,Tourist,North Market,,2025-12-29 21:53:04,2025-12-29 22:59:10,66.1,17.28,Unvalidated
+RIDE-2181,Bike-1361,Casual,,North Market,2025-09-28 21:53:04,2025-09-28 21:56:28,3.4,0.91,Unvalidated
+RIDE-9323,Bike-483,Robot,B\,okqforCM,2025-12-25 21:53:04,2025-12-25 23:28:58,95.9,19.79,Unvalidated
+RIDE-8696,Bike-2437,Member,City Hall,River Park,2025-11-07 21:53:04,2025-11-07 22:05:40,12.6,2.68,Unvalidated
+RIDE-480,Bike-704,Robot,Downtown Plaza,River Park,2025-11-06 21:53:04,2025-11-06 22:21:28,28.4,5.87,Unvalidated
+RIDE-741,Bike-4216,Admin,?}h{t,\_?=,2025-11-26 21:53:04,2025-11-26 22:34:40,41.6,15.97,Unvalidated
+RIDE-2892,Bike-1334,Member,East Terminal,North Market,2025-10-13 21:53:04,2025-10-13 23:14:46,81.7,16.78,Unvalidated
+RIDE-6785,Bike-3960,VIP,South Gardens,Central Station,2026-05-03 21:53:04,2026-05-03 23:16:10,83.1,17.09,Unvalidated
+RIDE-4891,Bike-2518,Member,West End,West End,2026-03-29 21:53:04,2026-03-29 23:26:34,93.5,19.24,Unvalidated
+RIDE-9852,Bike-4902,C asual, South  Gardens,Sout h    Gardens,202 5 -07-31 21 :53:04,2025-07-31 22 :06:28,13.4,5.6 3,Unvalidated
+RIDE-4265,Bike-1029,Tourist,Central Station,Central Station,2026-02-21 21:53:04,2026-02-21 23:01:52,68.8,15.94,Unvalidated
+RIDE-3974,Bike-2550,Tourist,Central Station,City Hall,2025-06-05 21:53:04,2025-06-05 22:05:58,12.9,4.17,Unvalidated
+RIDE-1644,Bike-2203,Tourist,City Hall,University,2025-09-28 21:53:04,2025-09-28 22:56:40,63.6,16.0,Unvalidated
+RIDE-9432,Bike-2632,Member,River Park,University,2026-04-25 21:53:04,2026-04-25 22:45:10,52.1,16.85,Unvalidated
+RIDE-3757,Bike-4205,Robot,North Market,West End,2025-09-12 21:53:04,2025-09-12 22:54:04,61.0,14.47,Unvalidated
+RIDE-2526,Bike-1146,,,River Park,2026-05-27 21:53:04,2026-05-27 22:49:22,56.3,14.26,Unvalidated
+RIDE-4349,Bike-3017,Robot,North Market,Tech District,2025-06-16 21:53:04,2025-06-16 22:36:52,43.8,17.7,Unvalidated
+RIDE-8638,,Casual,University,North Market,2025-12-12 21:53:04,2025-12-12 22:38:28,45.4,14.09,Unvalidated
+RIDE-5741,Bike-4857,,Central Station,East Terminal,2026-01-27 21:53:04,2026-01-27 22:22:34,29.5,12.95,Unvalidated
+RIDE-3670,Bike-4150,Robot,River Park,Central Station,2025-12-25 21:53:04,2025-12-25 23:08:52,75.8,16.94,Unvalidated
+RIDE-1935,Bike-800,Casual,North Market,Tech District,2026-03-10 21:53:04,2026-03-10 22:44:16,51.2,13.54,Unvalidated
+ R IDE-9156,Bike-1030,Admin,tQEQc\\Hp,]-R,2025-07-21 21 :53:04,2025 -07-21 23:09:04, 76.0,18.07,Unvalidated
+RIDE-1505,Bike-3031,,{b;I,wMM-XW|{o,2026-04-28 21:53:04,2026-04-28 22:38:40,45.6,16.65,Unvalidated
+RIDE-4965,Bike-1385,,G,r,2025-11-20 21:53:04,2025-11-20 22:21:22,28.3,5.84,Unvalidated
+RIDE-1427,Bike-2569,Tourist,North Market,Central Station,2025-07-25 21:53:04,2025-07-25 22:40:34,47.5,17.83,Unvalidated
+RIDE-3347,Bike-2824,Casual,Central Station,,2025-08-19 21:53:04,2025-08-19 23:07:04,74.0,17.71,Unvalidated
+RIDE-6181,Bike-1867,Admin,South Gardens,Tech District,2025-10-10 21:53:04,2025-10-10 22:58:10,65.1,15.64,Unvalidated
+RIDE-9024,Bike-834,Admin,8=eJh;Z,@>6{,2026-05-09 21:53:04,2026-05-09 22:06:58,13.9,3.04,Unvalidated
+RIDE-7991,,,West End,University,2026-05-06 21:53:04,2026-05-06 22:15:34,22.5,4.64,Unvalidated
+RIDE-2689,Bike-1625,,JOK8;=86D3,,2025-12-24 21:53:04,2025-12-24 22:05:40,12.6,5.84,Unvalidated
+RIDE-5073,,Member,South Gardens,,2025-06-26 21:53:04,2025-06-26 22:24:04,31.0,14.45,Unvalidated
+RIDE-7016,Bike-836,Tourist,City Hall,University,2025-09-13 21:53:04,2025-09-13 22:04:40,11.6,4.26,Unvalidated
+RIDE-4134,Bike-1342,Admin,River Park,South Gardens,2025-09-17 21:53:04,2025-09-17 22:58:04,65.0,14.0,Unvalidated
+RIDE-4386,Bike-3349,Member,University,North Market,2025-06-27 21:53:04,2025-06-27 22:25:04,32.0,12.01,Unvalidated
+RIDE-2873,Bike-1504,Admin,M-GUB-lSl,=E,2025-08-14 21:53:04,2025-08-14 22:09:52,16.8,6.52,Unvalidated
+RIDE-3135,Bike-2090,Admin,]aAK,rt,2026-03-08 21:53:04,2026-03-08 22:43:22,50.3,16.29,Unvalidated
+RIDE-1069,Bike-3816,Tourist,,,2026-01-13 21:53:04,2026-01-13 22:29:40,36.6,14.05,Unvalidated
+RIDE-1626,Bike-3833,Tourist,River Park,South Gardens,2026-05-10 21:53:04,2026-05-10 22:11:10,18.1,4.41,Unvalidated
+RIDE-9162,Bike-1742,Casual,South Gardens,Central Station,2026-06-01 21:53:04,2026-06-01 22:05:22,12.3,3.75,Unvalidated
+RIDE-3526,Bike-1574,Tourist,University,East Terminal,2026-03-18 21:53:04,2026-03-18 22:53:58,60.9,19.92,Unvalidated
+RIDE-3378,Bike-593,VIP,Central Station,Downtown Plaza,2026-01-19 21:53:04,2026-01-19 22:19:10,26.1,10.75,Unvalidated
+RIDE-5578,Bike-756,Robot,North Market,South Gardens,2025-11-23 21:53:04,2025-11-23 22:37:40,44.6,14.91,Unvalidated
+RIDE-50,Bike-4659,,City Hall,East Terminal,2026-02-26 21:53:04,2026-02-26 22:04:34,11.5,5.48,Unvalidated
+RIDE-6055,Bike-3684,Robot,wy1F,8Fw-Vf,2026-02-20 21:53:04,2026-02-20 22:03:52,10.8,3.57,Unvalidated
+RIDE-6947,Bike-97,Admin,South Gardens,,2025-08-27 21:53:04,2025-08-27 22:48:58,55.9,11.53,Unvalidated
+RIDE-7690,Bike-4618,Casual,East Terminal,Downtown Plaza,2025-12-01 21:53:04,2025-12-01 22:06:58,13.9,4.92,Unvalidated
+RIDE-3775,Bike-2573,VIP,East Terminal,North Market,2026-02-22 21:53:04,2026-02-22 22:23:40,30.6,10.42,Unvalidated
+RIDE-6492,Bike-1729,Tourist,Central Station,North Market,2026-05-26 21:53:04,2026-05-26 22:27:46,34.7,7.07,Unvalidated
+RIDE-9489,Bike-3840,VIP,City Hall,East Terminal,2026-01-14 21:53:04,2026-01-14 22:38:40,45.6,13.78,Unvalidated
+RIDE-8830,Bike-3694,Member,,South Gardens,2025-12-29 21:53:04,2025-12-29 23:03:40,70.6,16.61,Unvalidated
+RIDE-82,Bike-4557,Tourist,University,Downtown Plaza,2025-07-01 21:53:04,2025-07-01 22:27:04,34.0,7.2,Unvalidated
+RIDE-6041,Bike-2427,Casual,,North Market,2026-04-15 21:53:04,2026-04-15 21:55:16,2.2,1.06,Unvalidated
+RIDE-5842,Bike-3376,Member,,East Terminal,2026-05-09 21:53:04,2026-05-09 22:20:16,27.2,8.72,Unvalidated
+RIDE-5772,Bike-3946,Robot,University,North Market,2025-07-11 21:53:04,2025-07-11 23:01:28,68.4,14.85,Unvalidated
+RIDE-6375,Bike-3562,Casual,Tech District,Downtown Plaza,2025-10-28 21:53:04,2025-10-28 22:22:28,29.4,6.93,Unvalidated
+RIDE-725,Bike-997,Robot,City Hall,West End,2026-05-18 21:53:04,2026-05-18 22:43:04,50.0,15.28,Unvalidated
+RIDE-4338,Bike-950,Casual,City  Hall,City H all,2026-0 1-07 21: 53:04,2026-01 -07 22:04: 34,11 .5,4. 06,Unvalidated
+RIDE-1023,Bike-3376,VIP,Downtown Plaza,Tech District,2026-05-01 21:53:04,2026-05-01 22:33:22,40.3,10.22,Unvalidated
+   RIDE-1723,Bike-1547,Tourist,River Park,,2025-08-11 21 :53:04,2025-08-11  22:58:46,65.7,14.95,Unvalidated
+ RIDE-9771,Bike-29 00,  VIP,.V>7\:Q|,aUQfEYxR}, 2025-10-03  21:53:04, 2025-10-03 2 2:38:52,45.8,17.02,Unvalidated
+RIDE-5745,Bike-1299,VIP,South Gardens,West End,2026-02-21 21:53:04,2026-02-21 22:26:34,33.5,7.68,Unvalidated
+RIDE-4174,Bike-766,Tourist,University,West End,2026-02-27 21:53:04,2026-02-27 22:51:16,58.2,11.7,Unvalidated
+RIDE-1874,Bike-2312,Casual,3lUa76S6@,J1|c3JwH_,2026-04-20 21:53:04,2026-04-20 22:38:10,45.1,19.69,Unvalidated
+RIDE-7155,Bike-4894,Tourist,Tech District,City Hall,2025-12-10 21:53:04,2025-12-10 22:13:10,20.1,8.58,Unvalidated
+RIDE-7839,,VIP,Downtown Plaza,River Park,2025-10-28 21:53:04,2025-10-28 23:13:04,80.0,16.77,Unvalidated
+RIDE-733 4,Bike-2 331,,Univ e rsity,East Termin al,2025-0 8-16  21:53:04,20 25-0 8-16 22:44:10,51.1,12. 7,Unvalidated
+RIDE-8365,Bike-1700,Member,North Market,City Hall,2025-08-21 21:53:04,2025-08-21 21:56:16,3.2,0.77,Unvalidated
+RIDE-4687,Bike-4156,,South Gardens,Central Station,2025-09-25 21:53:04,2025-09-25 22:47:58,54.9,12.73,Unvalidated
+RIDE-7 587,Bike -552,Tour ist,West End,Tech Distr ict,2025-07-28  21  :5 3:04,2025-07 -  28 22:16:40,23. 6,10. 24,Unvalidated
+RIDE-8375,Bike-2310,Casual,Tech District,,2025-08-14 21:53:04,2025-08-14 23:13:34,80.5,17.11,Unvalidated
+RIDE-9537,Bike-3406,Admin,KCdCw]]P/`M5,c>,2025-10-21 21:53:04,2025-10-21 22:39:58,46.9,11.31,Unvalidated
+RIDE-7607,,Member,South Gardens,University,2025-07-03 21:53:04,2025-07-03 22:27:58,34.9,15.6,Unvalidated
+RIDE-4320,Bike-1356,Robot,Tech District,East Terminal,2026-04-18 21:53:04,2026-04-18 23:01:04,68.0,19.79,Unvalidated
+RIDE-5587,Bike-1231,Tourist,Central Station,City Hall,2025-06-30 21:53:04,2025-06-30 23:31:34,98.5,19.83,Unvalidated
+RIDE-632,Bike-493,Member,University,West End,2026-03-27 21:53:04,2026-03-27 22:06:22,13.3,5.99,Unvalidated
+RIDE-2089,Bike-4104,Robot,North Market,Tech District,2026-05-26 21:53:04,2026-05-26 22:00:52,7.8,3.65,Unvalidated
+RIDE-6610,Bike-4208,Robot,East Terminal,West End,2026-03-02 21:53:04,2026-03-02 22:19:46,26.7,11.13,Unvalidated
+RIDE-2864,Bike-2695,Tourist,Downtown Plaza,West End,2026-03-10 21:53:04,2026-03-10 22:46:46,53.7,17.33,Unvalidated
+RIDE-3557,Bike-1923,Tourist,City Hall,River Park,2025-08-08 21:53:04,2025-08-08 22:29:52,36.8,7.43,Unvalidated
+RIDE-2294,,Tourist,South Gardens,Downtown Plaza,2025-07-31 21:53:04,2025-07-31 23:16:52,83.8,19.57,Unvalidated
+RIDE-9643,Bike-3703,Member,University,South Gardens,2026-03-31 21:53:04,2026-03-31 22:27:58,34.9,10.61,Unvalidated
+RIDE-9916,Bike-494,Casual,East Terminal,University,2025-12-30 21:53:04,2025-12-30 22:22:16,29.2,13.87,Unvalidated
+RIDE-1164,Bike-2024,Tourist,Central Station,City Hall,2025-09-11 21:53:04,2025-09-11 22:13:46,20.7,6.43,Unvalidated
+RIDE-301,Bike-3793,Robo t,Downtown  Plaza,E ast Ter minal,2025-08-30 21:53:0 4, 2025-08-30 23:15:10,82.1, 18 .03,Unvalidated
+RIDE-4791,Bike-3283,VIP,Central Station,Tech District,2026-03-15 21:53:04,2026-03-15 22:31:58,38.9,14.26,Unvalidated
+RIDE-1442,Bike-3732,Tourist,Downtown Plaza,University,2025-12-04 21:53:04,2025-12-04 22:36:04,43.0,10.0,Unvalidated
+RIDE-7901,Bike-1901,VIP,West End,City Hall,2026-01-05 21:53:04,2026-01-05 23:16:10,83.1,17.19,Unvalidated
+RIDE-9584,Bike-3902,Tourist,gk/Yn,7X,2026-03-04 21:53:04,2026-03-04 23:06:52,73.8,16.96,Unvalidated
+RIDE-2499,,Robot,North Market,University,2025-07-21 21:53:04,2025-07-21 22:05:46,12.7,5.31,Unvalidated
+RIDE-2855,Bike-687,Tourist,,North Market,2025-10-02 21:53:04,2025-10-02 22:14:16,21.2,9.63,Unvalidated
+RIDE-8159,,Tourist,Downtown Plaza,Downtown Plaza,2026-01-04 21:53:04,2026-01-04 22:44:34,51.5,16.51,Unvalidated
+RIDE-1976,Bike-48,VIP,River Park,University,2025-09-19 21:53:04,2025-09-19 22:25:58,32.9,9.61,Unvalidated
+RIDE-6361,Bike-989,,University,North Market,2025-08-29 21:53:04,2025-08-29 22:38:58,45.9,10.68,Unvalidated
+RIDE-2235,Bike-3127,Member,East Terminal,West End,2026-02-21 21:53:04,2026-02-21 22:28:58,35.9,16.57,Unvalidated
+RIDE-8801,Bike-3095,VIP,West End,City Hall,2025-09-20 21:53:04,2025-09-20 22:31:28,38.4,9.18,Unvalidated
