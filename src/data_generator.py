@@ -7,9 +7,12 @@ import utils
 def generate_ride(ride_id):
     ride_id=f"RIDE-{random.randint(1,10000)}"
 
-    bike_id = f"Bike-{random.randint(1, 5000)}"
+    bike_id_prefixes=["BIKE","bike","Bike","BIkE","bIKE","BiKe","BIkE"]
+    bike_id_suffixes=str(random.randint(1,5000))
 
-    user_type = random.choice(["Member", "Casual","Tourist","VIP","Robot","Admin",""])
+    bike_id = bike_id_prefixes[random.randint(0, len(bike_id_prefixes)-1)] + '-' + bike_id_suffixes
+
+    user_type = random.choice(["Member", "Casual","Tourist","VIP","Robot","Admin","maybe"])
     
     start_station = random.choice(list(utils.dict_stations.keys()))
 
@@ -18,14 +21,28 @@ def generate_ride(ride_id):
     start_time = datetime.now() - timedelta(
         days=random.randint(0, 365)
     )
+    distance= round(random.uniform(-20.0, 20.0), 2)
+    distance= str(distance)
+    measurement_units=["km"," "]
+    distance_km = distance + measurement_units[random.randint(0,len(measurement_units)-1)]
     
-    distance_km = round(random.uniform(0.5, 20.0), 2)
+    duration_minutes = round(float(distance_km.replace(measurement_units[0], "")) * random.uniform(2, 5), 1)
+     
+    endtime_time_below = start_time - timedelta(minutes=random.randint(0,24))
+    endtime_time_upper = start_time + timedelta(minutes=random.randint(0,24))
+    end_time = random.choice([endtime_time_below, endtime_time_upper])
     
-    duration_minutes = round(distance_km * random.uniform(2, 5), 1)
-
-    end_time = start_time + timedelta(minutes=duration_minutes)
     
     status = "Unvalidated"
+    formats = [
+        "%Y/%d/%m %H:%M",   # Y/d/m
+        "%Y-%m-%d %H:%M",   # normal (kept for mix)
+        "%d-%m-%Y %H:%M",   # d-m-Y
+        "%Y/%m/%d %H:%M",   # Y/m/d
+        "%d/%m/%Y %H:%M",   # d/m/Y
+    ]
+    date_format=random.choice(formats)
+
     
     current_ride=[
         ride_id,
@@ -33,8 +50,8 @@ def generate_ride(ride_id):
         user_type,      
         start_station,
         end_station,
-        start_time.strftime("%Y-%m-%d %H:%M:%S"),
-        end_time.strftime("%Y-%m-%d %H:%M:%S"),
+        start_time.strftime(date_format),
+        end_time.strftime(date_format),
         duration_minutes,
         distance_km,
         status
@@ -51,6 +68,11 @@ def generate_ride(ride_id):
         current_ride[3] = ""
     if random.random() < utils.PROBABILITY_RECORD_WILL_MISSING_STATIONS: #only 10% of rides will have missing End station
         current_ride[4] = ""
+    if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_INVALID_FORMATING: #only 10% of rides will have invalid formatting
+        current_ride = inconsistent_name_formating(current_ride)
+    if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_INVALID_BIKE_IDS: #only 10% of rides will have invalid bike ids
+        current_ride = invalid_bike_ids(current_ride)
+    
 
     return current_ride
 
@@ -61,6 +83,7 @@ def introduce_spaces(ride):
 
         if field == "Unvalidated":
             continue
+        
 
         for j in range(len(field)):
             if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_SPACES:  # 10% chance to add a space
@@ -91,6 +114,50 @@ def create_invalid_station_names(ride):
     
     return ride
 
+def inconsistent_name_formating(ride):
+    start_station = ride[3]
+    end_station = ride[4]
+
+    new_start_station = ""
+    for i in range(len(start_station)):
+        if random.random() < len(start_station):
+            new_start_station += start_station[i].upper()
+        if random.random() == len(start_station):
+            new_start_station += start_station[i].lower()
+
+    new_end_station = ""
+    for i in range(len(end_station)):
+        if random.random() < len(end_station):
+            new_end_station += end_station[i].upper()
+        if random.random() == len(end_station):
+            new_end_station += end_station[i].lower()
+
+    ride[3] = new_start_station
+    ride[4] = new_end_station
+
+    return ride
+
+def invalid_bike_ids(ride):
+    bike_id = ride[1]
+    if "-" not in bike_id:
+        return ride 
+
+    prefix_id, suffix_id = bike_id.split("-", 1)
+    
+    new_suffix_id = ""
+
+    for i in range(len(suffix_id)):
+        if random.random() < len(suffix_id):
+            new_suffix_id = ""
+            new_suffix_id += chr(random.randint(ord('A'), ord('Z')))
+        if random.random() < len(suffix_id):
+            new_suffix_id += suffix_id[i]
+    
+    ride[1] = prefix_id + "-" + new_suffix_id
+    return ride
+
+
+
 
 def create_dataset(filename, num_rows):
     with open(filename, "w", newline="") as file:
@@ -112,4 +179,4 @@ def create_dataset(filename, num_rows):
         for ride_id in range(1, num_rows + 1):
             writer.writerow(generate_ride(ride_id))
 
-create_dataset("data/bike_rides.csv", 100)
+create_dataset("data/bike_rides.csv", 10000)
