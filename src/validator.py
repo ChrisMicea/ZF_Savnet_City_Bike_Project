@@ -106,13 +106,19 @@ def validate_end_station(record: dict) -> str:
 
 def validate_start_time(record: dict) -> str:
     start_time = record.get("start_time")
+
+    # if date has spaces, mark as needs_cleaning
+    if " " in start_time:
+        start_time = start_time.strip()
+    
+    # now add back the space standing between dd-mm-yy and hh-mm
+    
+
     # if the date format is invalid, mark as needs_cleaning
     try:
         datetime.strptime(start_time, "%d-%m-%Y %H:%M")
     except ValueError:
         return VALIDATION_STATUS[2]
-    # if date has spaces, mark as needs_cleaning
-    
     
     return VALIDATION_STATUS[1]
 
