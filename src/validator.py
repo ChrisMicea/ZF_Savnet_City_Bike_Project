@@ -2,6 +2,7 @@
 
 import csv, re
 import utils
+from datetime import datetime
 
 VALIDATION_STATUS = {
     0: "beyond_repair",
@@ -20,9 +21,9 @@ def validate_records(csv_input: str):
             # status = validate_ride_id(row)
             # status = validate_bike_id(row)
             # status = validate_user_type(row)
-            status = validate_start_station(row)
+            # status = validate_start_station(row)
             # validate_end_station(row)
-            # validate_start_time(row)
+            status = validate_start_time(row)
             # validate_end_time(row)
             # validate_duration(row)
             print(f"Record #{idx} has status {status}")
@@ -104,10 +105,25 @@ def validate_end_station(record: dict) -> str:
     pass
 
 def validate_start_time(record: dict) -> str:
-    pass
+    start_time = record.get("start_time")
+    # if the date format is invalid, mark as needs_cleaning
+    try:
+        datetime.strptime(start_time, "%d-%m-%Y %H:%M")
+    except ValueError:
+        return VALIDATION_STATUS[2]
+    # if date has spaces, mark as needs_cleaning
+    
+    
+    return VALIDATION_STATUS[1]
 
 def validate_end_time(record: dict) -> str:
-    pass
+    end_time = record.get("end_time")
+    # if the date format is invalid, mark as needs_cleaning
+    try:
+        datetime.strptime(end_time, "%d-%m-%Y %H:%M")
+    except ValueError:
+        return VALIDATION_STATUS[2]
+    # if date has spaces, mark as needs_cleaning
 
 def validate_duration(record: dict) -> str:
     pass
