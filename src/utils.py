@@ -5,5 +5,7 @@ PROBABILITY_RECORD_WILL_CONTAIN_INVALID_STATIONS=0.1
 PROBABILITY_RECORD_WILL_CONTAIN_INVALID_FORMATING=0.1
 PROBABILITY_RECORD_WILL_CONTAIN_INVALID_BIKE_IDS=0.1
 PROBABILITY_RECORD_WILL_CONTAIN_INVALID_DURATION=0.1
+PROBABILITY_RECORD_WILL_CONTAIN_INVALID_USER_TYPE=0.1
 
 dict_stations = {'Central Station': 1, 'Tech District': 2, 'River Park': 3, 'Downtown Plaza': 4, 'East Terminal': 5, 'West End': 6, 'University': 7, 'South Gardens': 8, 'City Hall': 9, 'North Market': 10}
+valid_user_types = {"member", "casual", "tourist"}

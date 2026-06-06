@@ -5,14 +5,14 @@ import utils
 
 
 def generate_ride(ride_id):
-    ride_id=f"RIDE-{random.randint(1,10000)}"
+    ride_id=f"RIDE-{random.randint(1,100000)}"
 
     bike_id_prefixes=["BIKE","bike","Bike","BIkE","bIKE","BiKe","BIkE"]
     bike_id_suffixes=str(random.randint(1,5000))
 
     bike_id = bike_id_prefixes[random.randint(0, len(bike_id_prefixes)-1)] + '-' + bike_id_suffixes
 
-    user_type = random.choice(["Member", "Casual","Tourist","VIP","Robot","Admin","maybe"])
+    user_type = random.choice(["member", "casual", "tourist", "vip", "robot", "admin", "maybe"])
     
     start_station = random.choice(list(utils.dict_stations.keys()))
 
@@ -74,8 +74,10 @@ def generate_ride(ride_id):
         current_ride = invalid_bike_ids(current_ride)
     if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_INVALID_DURATION: #only 10% of rides will have invalid duration
         current_ride = invalid_durations(current_ride)
+    if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_INVALID_USER_TYPE: #only 10% of rides will have inconsistent user type capitalization
+        print("here")
+        current_ride = inconsistent_user_type_capitalization(current_ride)
     
-
     return current_ride
 
 
@@ -161,6 +163,19 @@ def invalid_bike_ids(ride):
 
 def invalid_durations(ride):
     ride[7] = ""
+    return ride
+
+def inconsistent_user_type_capitalization(ride):
+    user_type = ride[2]
+    
+    new_user_type = ""
+    for i in range(len(user_type)):
+        if random.randint(0, len(user_type)) < len(user_type) / 2:
+            new_user_type += user_type[i].upper()
+        else:
+            new_user_type += user_type[i].lower()
+    
+    ride[2] = new_user_type
     return ride
 
 def create_dataset(filename, num_rows):
