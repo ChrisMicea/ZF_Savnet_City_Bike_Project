@@ -26,10 +26,10 @@ def generate_ride(ride_id):
     measurement_units=["km"," "]
     distance_km = distance + measurement_units[random.randint(0,len(measurement_units)-1)]
     
-    duration_minutes = round(float(distance_km.replace(measurement_units[0], "")) * random.uniform(2, 5), 1)
+    duration_minutes = round(float(distance_km.replace(measurement_units[0], "")) * random.uniform(1, 10), 1)
      
-    endtime_time_below = start_time - timedelta(minutes=random.randint(0,24))
-    endtime_time_upper = start_time + timedelta(minutes=random.randint(0,24))
+    endtime_time_below = start_time - timedelta(minutes=random.randint(int(duration_minutes)-10,int(duration_minutes)+10))
+    endtime_time_upper = start_time + timedelta(minutes=random.randint(int(duration_minutes)-10,int(duration_minutes)+10))
     end_time = random.choice([endtime_time_below, endtime_time_upper])
     
     
@@ -72,6 +72,8 @@ def generate_ride(ride_id):
         current_ride = inconsistent_name_formating(current_ride)
     if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_INVALID_BIKE_IDS: #only 10% of rides will have invalid bike ids
         current_ride = invalid_bike_ids(current_ride)
+    if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_INVALID_DURATION: #only 10% of rides will have invalid duration
+        current_ride = invalid_durations(current_ride)
     
 
     return current_ride
@@ -157,7 +159,9 @@ def invalid_bike_ids(ride):
     return ride
 
 
-
+def invalid_durations(ride):
+    ride[7] = ""
+    return ride
 
 def create_dataset(filename, num_rows):
     with open(filename, "w", newline="") as file:
