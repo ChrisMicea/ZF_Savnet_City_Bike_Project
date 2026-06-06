@@ -7,7 +7,8 @@ from datetime import datetime
 VALIDATION_STATUS = {
     0: "beyond_repair",
     1: "clean",
-    2: "needs_cleaning"
+    2: "needs_cleaning",
+    3: "suspicious"
 }
 
 ride_ids_encountered = set()
@@ -21,9 +22,9 @@ def validate_records(csv_input: str):
             # status = validate_ride_id(row)
             # status = validate_bike_id(row)
             # status = validate_user_type(row)
-            # status = validate_start_station(row)
-            # validate_end_station(row)
-            status = validate_start_time(row)
+            status = validate_station(row, 0)
+            # validate_station(row, 1)
+            # status = validate_start_time(row)
             # validate_end_time(row)
             # validate_duration(row)
             print(f"Record #{idx} has status {status}")
@@ -98,11 +99,38 @@ def validate_user_type(record: dict) -> str:
     
     return VALIDATION_STATUS[1] if not has_spaces else VALIDATION_STATUS[2]
 
-def validate_start_station(record: dict) -> str:
-    pass
+def validate_station(record: dict, start_or_end_station: int) -> str:
+    #not be empty, normalized consistently (no spaces, no special characters, has to have capital letters), contain readable text, missing stations are invalid
+    station_key = "start_station" if start_or_end_station == 0 else "end_station"
+    station = record.get(station_key)
+    if not station:
+        return VALIDATION_STATUS[0]
+    
+    # if the field contains spaces, mark as needs_cleaning and strip the spaces
+    needs_cleaning = False
+    if " " in station:
+        needs_cleaning = True
+        station = station.replace(" ", "")
 
-def validate_end_station(record: dict) -> str:
-    pass
+    # start_station must have capital letters
+    if station != station.title():
+        needs_cleaning = True
+        station = station.title()
+    
+    # start_station names must not contain special characters or numbers and if they do, they are invalid;
+    # do not use isalpha() method as i have "_" in the station names
+    if not re.match(r"^[A-Za-z_]+$", station):
+        return VALIDATION_STATUS[0]
+
+    # if the start_station name is not in the dictionary of valid stations, does not contain special characters or numbers, then it must be flagged as suspicious
+    if station not in utils.dict_stations:
+        return VALIDATION_STATUS[3]
+
+    # start_station names must be in the dictionary of valid stations
+    if station not in utils.dict_stations:
+        return VALIDATION_STATUS[0]
+    
+    return VALIDATION_STATUS[1] if not needs_cleaning else VALIDATION_STATUS[2]
 
 def validate_start_time(record: dict) -> str:
     start_time = record.get("start_time")
@@ -157,4 +185,49 @@ def validate_end_time(record: dict) -> str:
         return VALIDATION_STATUS[2] # readable datetime format but not the correct / standard one, needs cleaning
 
 def validate_duration(record: dict) -> str:
-    pass
+    #has to be in bike_rides.csv, it must be a number, it must be positive
+    duration_id = record.get("duration_minutes")
+    if not duration_id:
+        return VALIDATION_STATUS[0]
+    
+    # if the field contains spaces, mark as needs_cleaning and strip the spaces
+    needs_cleaning = False
+    if " " in duration_id:
+        needs_cleaning = True
+        duration_id = duration_id.strip()
+    
+    # check if the field is a number
+    if not duration_id.isdigit():
+        return VALIDATION_STATUS[0]
+    
+    # check if the field is positive
+    if int(duration_id) < 0:
+        return VALIDATION_STATUS[0]
+    
+    return VALIDATION_STATUS[1] if not needs_cleaning else VALIDATION_STATUS[2]
+
+def validate_distance_(record: dict) -> str:
+    #has to be in bike_rides.csv, it must not be a negative value and it must be a number, it can also contain "km" before or after the digits
+    distance_id = record.get("distance_km")
+    if not distance_id:
+        return VALIDATION_STATUS[0]
+    
+    # if the field contains spaces, mark as needs_cleaning and strip the spaces
+    needs_cleaning = False
+    if " " in distance_id:
+        needs_cleaning = True
+        distance_id = distance_id.strip()
+    
+    # flag "km" from the string if it exists with needs_cleaning
+    if "km" in distance_id:
+        needs_cleaning = True
+    
+    # check if the field is a number
+    if not distance_id.isdigit():
+        return VALIDATION_STATUS[0]
+    
+    # check if the field is negative
+    if int(distance_id) < 0:
+        return VALIDATION_STATUS[0]
+    
+    return VALIDATION_STATUS[1] if not needs_cleaning else VALIDATION_STATUS[2]
