@@ -34,14 +34,14 @@ def generate_ride(ride_id):
     
     
     status = "Unvalidated"
-    formats = [
-        "%Y/%d/%m %H:%M",   # Y/d/m
-        "%Y-%m-%d %H:%M",   # normal (kept for mix)
-        "%d-%m-%Y %H:%M",   # d-m-Y
-        "%Y/%m/%d %H:%M",   # Y/m/d
-        "%d/%m/%Y %H:%M",   # d/m/Y
-    ]
-    date_format=random.choice(formats)
+    # formats = [
+    #     "%Y/%d/%m %H:%M",   # Y/d/m
+    #     "%Y-%m-%d %H:%M",   # normal (kept for mix)
+    #     "%d-%m-%Y %H:%M",   # d-m-Y
+    #     "%Y/%m/%d %H:%M",   # Y/m/d
+    #     "%d/%m/%Y %H:%M",   # d/m/Y
+    # ]
+    date_format=random.choice(utils.accepted_date_formats)
 
     
     current_ride=[
@@ -75,7 +75,6 @@ def generate_ride(ride_id):
     if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_INVALID_DURATION: #only 10% of rides will have invalid duration
         current_ride = invalid_durations(current_ride)
     if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_INVALID_USER_TYPE: #only 10% of rides will have inconsistent user type capitalization
-        print("here")
         current_ride = inconsistent_user_type_capitalization(current_ride)
     
     return current_ride
@@ -88,7 +87,6 @@ def introduce_spaces(ride):
         if field == "Unvalidated":
             continue
         
-
         for j in range(len(field)):
             if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_SPACES:  # 10% chance to add a space
                 field = field[:j] + ' ' + field[j:]

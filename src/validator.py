@@ -109,27 +109,52 @@ def validate_start_time(record: dict) -> str:
 
     # if date has spaces, mark as needs_cleaning
     if " " in start_time:
-        start_time = start_time.strip()
+        start_time = start_time.replace(" ", "")
     
     # now add back the space standing between dd-mm-yy and hh-mm
-    
+    start_time = start_time[:10] + " " + start_time[10:]
 
-    # if the date format is invalid, mark as needs_cleaning
-    try:
-        datetime.strptime(start_time, "%d-%m-%Y %H:%M")
-    except ValueError:
-        return VALIDATION_STATUS[2]
+    # if the date format is not found in utils.accepted_date_formats, it is invalid / beyond repair
+    for format in utils.accepted_date_formats:
+        try:
+            datetime.strptime(start_time, format)
+            break # break skips the latter "else: ... " block
+        except ValueError:
+            continue
+    else:
+        return VALIDATION_STATUS[0]
     
-    return VALIDATION_STATUS[1]
+    try:
+        datetime.strptime(start_time, "%Y-%m-%d %H:%M") # correct format, needs no cleaning
+        return VALIDATION_STATUS[1]
+    except ValueError:
+        return VALIDATION_STATUS[2] # readable datetime format but not the correct / standard one, needs cleaning
 
 def validate_end_time(record: dict) -> str:
     end_time = record.get("end_time")
-    # if the date format is invalid, mark as needs_cleaning
-    try:
-        datetime.strptime(end_time, "%d-%m-%Y %H:%M")
-    except ValueError:
-        return VALIDATION_STATUS[2]
+
     # if date has spaces, mark as needs_cleaning
+    if " " in end_time:
+        end_time = end_time.strip()
+    
+    # now add back the space standing between dd-mm-yy and hh-mm
+    end_time = end_time[:10] + " " + end_time[10:]
+
+    # if the date format is not found in utils.accepted_date_formats, it is invalid / beyond repair
+    for format in utils.accepted_date_formats:
+        try:
+            datetime.strptime(end_time, format)
+            break # break skips the latter "else: ... " block
+        except ValueError:
+            continue
+    else:
+        return VALIDATION_STATUS[0]
+    
+    try:
+        datetime.strptime(end_time, "%Y-%m-%d %H:%M") # correct format, needs no cleaning
+        return VALIDATION_STATUS[1]
+    except ValueError:
+        return VALIDATION_STATUS[2] # readable datetime format but not the correct / standard one, needs cleaning
 
 def validate_duration(record: dict) -> str:
     pass
