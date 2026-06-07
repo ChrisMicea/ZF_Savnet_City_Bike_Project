@@ -25,11 +25,6 @@ def worst_status(a, b):
     return max(a, b)
 
 
-def worst_status(a, b):
-    """Return the worse of two statuses (higher = worse)."""
-    return max(a, b)
-
-
 def validate_records(csv_input: str):
     # First pass: read all rows into memory
     with open(csv_input, "r", newline="") as file:
@@ -59,57 +54,6 @@ def validate_records(csv_input: str):
             writer.writerow(row)
 
             print(f"Record #{idx} has status {status}")
-
-
-# def validate_records(csv_input: str):
-    # with open(csv_input, "r+") as file:
-    #     reader = csv.DictReader(file)
-    #     writer = csv.DictWriter(file, fieldnames=reader.fieldnames+["status"])
-    #     writer.writeheader()
-
-    #     for idx, row in enumerate(reader):
-    #         status = VALIDATION_STATUS["clean"]
-
-    #         status = worst_status(status, validate_ride_id(row))
-    #         # print("After ride_id validation, status is " + str(status))
-    #         # if status == VALIDATION_STATUS["beyond_repair"]:
-    #         #     continue
-    #         status = worst_status(status, validate_bike_id(row))
-    #         # print("After bike_id validation, status is " + str(status))
-    #         # if status == VALIDATION_STATUS["beyond_repair"]:
-    #         #     continue
-    #         status = worst_status(status, validate_user_type(row))
-    #         # print("After user_type validation, status is " + str(status))
-    #         # if status == VALIDATION_STATUS["beyond_repair"]:
-    #         #     continue
-    #         status = worst_status(status, validate_station(row, 0))
-    #         # print("After start_station validation, status is " + str(status))
-    #         # if status == VALIDATION_STATUS["beyond_repair"]:
-    #         #     continue
-    #         status = worst_status(status, validate_station(row, 1))
-    #         # print("After end_station validation, status is " + str(status))
-    #         # if status == VALIDATION_STATUS["beyond_repair"]:
-    #         #     continue
-    #         status = worst_status(status, validate_start_time(row))
-    #         # print("After start_time validation, status is " + str(status))
-    #         # if status == VALIDATION_STATUS["beyond_repair"]:
-    #         #     continue
-    #         status = worst_status(status, validate_end_time(row))
-    #         # print("After end_time validation, status is " + str(status))
-    #         # if status == VALIDATION_STATUS["beyond_repair"]:
-    #         #     continue
-    #         status = worst_status(status, validate_duration(row))
-    #         # print("After duration validation, status is " + str(status))
-    #         # if status == VALIDATION_STATUS["beyond_repair"]:
-    #         #     continue
-    #         status = worst_status(status, validate_distance(row))
-    #         # print("After distance validation, status is " + str(status))
-        
-    #         row["status"] = VALIDATION_STATUS_FOR_WRITE[status]
-    #         writer.writerow(row)
-    #         # writer.writerow(row)
-            
-    #         print(f"Record #{idx} has status {status}")
 
 
 def validate_ride_id(record: dict) -> int:
