@@ -8,11 +8,19 @@ def generate_ride(ride_id):
     ride_id=f"RIDE-{random.randint(1,100000)}"
 
     bike_id_prefixes=["BIKE","bike","Bike","BIkE","bIKE","BiKe","BIkE"]
-    bike_id_suffixes=str(random.randint(1,5000))
+    bike_id_suffixes=str(random.randint(500,5000))
 
-    bike_id = bike_id_prefixes[random.randint(0, len(bike_id_prefixes)-1)] + '-' + bike_id_suffixes
+    if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_UNNORMALIZED_BIKE_IDS:
+        bike_id = bike_id_prefixes[random.randint(0, len(bike_id_prefixes)-1)] + '-' + bike_id_suffixes
+    else:
+        bike_id = bike_id_prefixes[0] + '-' + bike_id_suffixes
 
-    user_type = random.choice(["member", "casual", "tourist", "vip", "robot", "admin", "maybe"])
+    correct_user_types = ["member", "casual", "tourist"]
+    wrong_user_types = ["vip", "robot", "admin", "maybe"]
+    if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_INVALID_USER_TYPE:
+        user_type = random.choice(wrong_user_types)
+    else:
+        user_type = random.choice(correct_user_types)
     
     start_station = random.choice(list(utils.dict_stations.keys()))
 
@@ -21,9 +29,9 @@ def generate_ride(ride_id):
     start_time = datetime.now() - timedelta(
         days=random.randint(0, 365)
     )
-    distance= round(random.uniform(-20.0, 20.0), 2)
+    distance= round(random.uniform(-2.0, 20.0), 2)
     distance= str(distance)
-    measurement_units=["km"," "]
+    measurement_units=["km",""]
     distance_km = distance + measurement_units[random.randint(0,len(measurement_units)-1)]
     
     duration_minutes = round(float(distance_km.replace(measurement_units[0], "")) * random.uniform(1, 10), 1)
@@ -33,7 +41,7 @@ def generate_ride(ride_id):
     end_time = random.choice([endtime_time_below, endtime_time_upper])
     
     
-    status = "Unvalidated"
+    # status = "Unvalidated"
     # formats = [
     #     "%Y/%d/%m %H:%M",   # Y/d/m
     #     "%Y-%m-%d %H:%M",   # normal (kept for mix)
@@ -41,8 +49,10 @@ def generate_ride(ride_id):
     #     "%Y/%m/%d %H:%M",   # Y/m/d
     #     "%d/%m/%Y %H:%M",   # d/m/Y
     # ]
-    date_format=random.choice(utils.accepted_date_formats)
-
+    if random.random() < utils.PROBABILITY_RECORD_WILL_CONTAIN_UNUSUAL_DATETIME_FORMAT:
+        date_format = random.choice(utils.accepted_date_formats)
+    else:
+        date_format = utils.accepted_date_formats[1]
     
     current_ride=[
         ride_id,
@@ -54,7 +64,7 @@ def generate_ride(ride_id):
         end_time.strftime(date_format),
         duration_minutes,
         distance_km,
-        status
+        # status
     ]
     # Messiness Starter
 
@@ -190,7 +200,7 @@ def create_dataset(filename, num_rows):
             "end_time",
             "duration_minutes",
             "distance_km",
-            "status"
+            # "status"
         ])
 
         for ride_id in range(1, num_rows + 1):
