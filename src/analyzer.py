@@ -15,21 +15,17 @@ from collections import Counter
 from datetime import datetime
 import utils
 
-DATETIME_FMT = "%Y-%m-%d %H:%M"
-ANALYSIS_STATUSES = {"clean", "fixed", "suspicious"}
-DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
 
 # Internal helpers
 
 def _usable(records: list[dict]) -> list[dict]:
     """Records the pipeline has not discarded — safe to parse."""
-    return [r for r in records if r.get("status") in ANALYSIS_STATUSES]
+    return [r for r in records if r.get("status") in utils.ANALYSIS_STATUSES]
 
 
 # datetime parser - returns datetime object
 def _dt(record: dict, key: str) -> datetime:
-    return datetime.strptime(record[key], DATETIME_FMT)
+    return datetime.strptime(record[key], utils.DATETIME_FMT)
 
 
 def _avg(values: list) -> float | None:
@@ -40,7 +36,7 @@ def _top(counter: Counter, n: int = 5) -> list[tuple]:
     return counter.most_common(n)
 
 
-def _spike_threshold(counter: Counter, multiplier: float = 3.0) -> list[tuple]:
+def _spike_threshold(counter: Counter, multiplier: float = utils.SPIKE_THRESHOLD_MULTIPLIER) -> list[tuple]:
     """Items whose count exceeds multiplier × mean of all counts."""
     if not counter:
         return []
@@ -104,10 +100,10 @@ def avg_by_user_type(usable: list[dict], field: str) -> dict[str, float]:
 
 
 def rides_by_day(usable: list[dict]) -> dict[str, int]:
-    counts = {day: 0 for day in DAY_NAMES}
+    counts = {day: 0 for day in utils.DAY_NAMES}
     for r in usable:
         if r.get("start_time"):
-            counts[DAY_NAMES[_dt(r, "start_time").weekday()] ] += 1
+            counts[utils.DAY_NAMES[_dt(r, "start_time").weekday()] ] += 1
     return counts
 
 

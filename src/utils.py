@@ -10,10 +10,15 @@ PROBABILITY_RECORD_WILL_CONTAIN_UNNORMALIZED_BIKE_IDS = 0.1
 PROBABILITY_RECORD_WILL_CONTAIN_INVALID_USER_TYPE = 0.05
 PROBABILITY_RECORD_WILL_CONTAIN_UNUSUAL_DATETIME_FORMAT = 0.1
 
-MAX_RIDE_DURATION_MINUTES        = 600
-MIN_SPEED_KPH                    = 2.0
-MAX_SPEED_KPH                    = 60.0
+MAX_RIDE_DURATION_MINUTES = 600
+MIN_SPEED_KPH = 2.0
+MAX_SPEED_KPH = 60.0
 DURATION_TIMESTAMP_TOLERANCE_MIN = 5
+
+DATETIME_FMT = "%Y-%m-%d %H:%M"
+ANALYSIS_STATUSES = {"clean", "fixed", "suspicious"}
+DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+SPIKE_THRESHOLD_MULTIPLIER = 1.3
 
 dict_stations = {'Central_Station': 1, 'Tech_District': 2, 'River_Park': 3, 'Downtown_Plaza': 4, 'East_Terminal': 5, 'West_End': 6, 'University': 7, 'South_Gardens': 8, 'City_Hall': 9, 'North_Market': 10}
 valid_user_types = {"member", "casual", "tourist"}

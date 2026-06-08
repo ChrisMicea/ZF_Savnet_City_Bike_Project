@@ -54,7 +54,7 @@ def validate_records(csv_input: str):
             row["status"] = VALIDATION_STATUS_FOR_WRITE[status]
             writer.writerow(row)
 
-            print(f"Record #{idx} has status {status}")
+            # print(f"Record #{idx} has status {status}")
 
 def validate_ride_id(record: dict) -> int:
     ride_id = record.get("ride_id")
@@ -158,12 +158,12 @@ def _validate_datetime(value: str) -> int:
     if not value:
         return VALIDATION_STATUS["beyond_repair"]
 
-    value = value.replace(" ", "")
-    value = value[:10] + " " + value[10:]
+    stripped = value.replace(" ", "")
+    stripped = value[:10] + " " + value[10:]
 
     for fmt in utils.accepted_date_formats:
         try:
-            datetime.strptime(value, fmt)
+            datetime.strptime(stripped, fmt)
             break
         except ValueError:
             continue
