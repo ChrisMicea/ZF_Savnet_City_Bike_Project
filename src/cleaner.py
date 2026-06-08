@@ -31,7 +31,7 @@ validator.VALIDATION_STATUS_FOR_WRITE[4] = "fixed"
 _ride_ids_seen  = set()
 _bike_intervals = {} 
 
-def clean_data(input_file="data/bike_rides.csv", output_file="data/bike_rides_cleaned.csv"):
+def clean_data(input_file="data/bike_rides.csv", output_file="data/bike_rides_cleaned.csv") -> list[dict]:
     with open(input_file, "r") as infile:
         reader = csv.DictReader(infile)
         fieldnames = reader.fieldnames
@@ -80,6 +80,8 @@ def clean_data(input_file="data/bike_rides.csv", output_file="data/bike_rides_cl
     print(f"  fixed        : {counts['fixed']}")
     print(f"  suspicious   : {counts['suspicious']}")
     print(f"  beyond_repair: {counts['beyond_repair']}")
+
+    return cleaned_rows
 
 def _parse_datetime(value: str):
     # accept formats, return datetime or None
