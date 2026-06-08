@@ -5,3 +5,5 @@ bin
 include
 pyvenv.cfg
 data/*
+src/__pycache__
+tests/__pycache__
