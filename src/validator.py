@@ -56,7 +56,6 @@ def validate_records(csv_input: str):
 
             print(f"Record #{idx} has status {status}")
 
-
 def validate_ride_id(record: dict) -> int:
     ride_id = record.get("ride_id")
     if not ride_id:
