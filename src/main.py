@@ -10,8 +10,7 @@ def main():
     anomalies = analyze_anomalies()
     analysis  = analyzer.analyze(cleaned_data)
     print(analysis)
-    reporter.generate_reports(analysis, anomalies)
-    # intreb pe claude daca e ok test coverage-ul, ce teste ar mai adauga si sa modifice testele din validator pt durata 0, acum ca logica e set in stone
+    reporter.generate_reports(analysis, anomalies, quiet=True)
 
 
 if __name__ == "__main__":
