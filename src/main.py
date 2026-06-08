@@ -8,6 +8,5 @@ def main():
     print(analyzer.analyze(cleaned_data))
 
     # rides by hour nu merge
-    # station spikes e gol - nu stiu daca e de la dataset, la fel si route_spikes
 if __name__ == "__main__":
     main()

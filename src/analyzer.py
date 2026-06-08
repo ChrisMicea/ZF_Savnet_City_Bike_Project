@@ -36,13 +36,13 @@ def _top(counter: Counter, n: int = 5) -> list[tuple]:
     return counter.most_common(n)
 
 
-def _spike_threshold(counter: Counter, multiplier: float = utils.SPIKE_THRESHOLD_MULTIPLIER) -> list[tuple]:
-    """Items whose count exceeds multiplier × mean of all counts."""
-    if not counter:
-        return []
-    mean = sum(counter.values()) / len(counter)
-    threshold = mean * multiplier
-    return [(k, v) for k, v in counter.items() if v > threshold]
+# def _spike_threshold(counter: Counter, multiplier: float = utils.SPIKE_THRESHOLD_MULTIPLIER) -> list[tuple]:
+#     """Items whose count exceeds multiplier × mean of all counts."""
+#     if not counter:
+#         return []
+#     mean = sum(counter.values()) / len(counter)
+#     threshold = mean * multiplier
+#     return [(k, v) for k, v in counter.items() if v > threshold]
 
 
 # Individual analysis functions (each takes the full usable record list and returns a plain value)
@@ -194,8 +194,8 @@ def analyze(records: list[dict]) -> dict:
         # Anomalies
         "suspicious_bikes": susp_bikes,
         "suspicious_stations": susp_stations,
-        "station_spikes_start": _spike_threshold(by_start),
-        "station_spikes_end": _spike_threshold(by_end),
-        "route_spikes": _spike_threshold(by_route),
+        # "station_spikes_start": _spike_threshold(by_start),
+        # "station_spikes_end": _spike_threshold(by_end),
+        # "route_spikes": _spike_threshold(by_route),
         "same_station_count": same_station_count(usable),
     }
