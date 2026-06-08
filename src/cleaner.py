@@ -141,25 +141,15 @@
 #     # If no format matches, return original value
 #     return value
 import csv
-import re
 from datetime import datetime
 import utils
 import validator
 
-# Inject "fixed" into validator's status scheme (cleaner-only status)
 validator.VALIDATION_STATUS["fixed"] = 4
 validator.VALIDATION_STATUS_FOR_WRITE[4] = "fixed"
 
-# Global state for cross-record checks
 _ride_ids_seen  = set()
-_bike_intervals = {}   # bike_id -> [(start_time, end_time)]
-
-# Thresholds
-MAX_RIDE_DURATION_MINUTES        = 600
-MIN_SPEED_KPH                    = 2.0
-MAX_SPEED_KPH                    = 60.0
-DURATION_TIMESTAMP_TOLERANCE_MIN = 15
-
+_bike_intervals = {} 
 
 def clean_data(input_file="data/bike_rides.csv", output_file="data/bike_rides_cleaned.csv"):
     with open(input_file, "r") as infile:
@@ -179,17 +169,15 @@ def clean_data(input_file="data/bike_rides.csv", output_file="data/bike_rides_cl
             row = clean_user_type(row)
             row = clean_station(row, "start_station")
             row = clean_station(row, "end_station")
-            row = clean_start_time(row)
-            row = clean_end_time(row)
+            row = clean_time(row, 0)
+            row = clean_time(row, 1)
             row = clean_duration(row)
             row = clean_distance(row)
             row = check_cross_fields(row)
 
             if status == "needs_cleaning" and row["status"] not in ["beyond_repair", "suspicious"]:
                 row["status"] = "fixed"
-        else:
-            _register_ride(row)
-
+        
         cleaned_rows.append(row)
 
     def sort_key(row):
@@ -213,23 +201,8 @@ def clean_data(input_file="data/bike_rides.csv", output_file="data/bike_rides_cl
     print(f"  suspicious   : {counts['suspicious']}")
     print(f"  beyond_repair: {counts['beyond_repair']}")
 
-
-#???
-def _register_ride(record: dict):
-    """Register ride_id and bike interval for rows that are skipped during cleaning."""
-    ride_id = record.get("ride_id", "").replace(" ", "").upper()
-    if re.match(r"^RIDE-\d{5}$", ride_id):
-        _ride_ids_seen.add(ride_id)
-
-    bike_id  = record.get("bike_id", "").replace(" ", "")
-    start_time = _parse_datetime(record.get("start_time", ""))
-    end_time   = _parse_datetime(record.get("end_time", ""))
-    if bike_id and start_time and end_time and end_time > start_time:
-        _bike_intervals.setdefault(bike_id, []).append((start_time, end_time))
-
-#???
 def _parse_datetime(value: str):
-    """Try all accepted formats, return datetime or None."""
+    # accept formats, return datetime or None
     if not value:
         return None
     value = value.replace(" ", "")
@@ -251,159 +224,63 @@ def clean_spaces(record: dict):
 
 
 def clean_ride_id(record: dict):
-    # convert ride_id to uppercase and check the invalid format as beyond_repair
+    # convert ride_id to uppercase
     ride_id = record.get("ride_id")
 
-    if not ride_id:
-        record["status"] = "beyond_repair"
-        return record
-
     ride_id = ride_id.upper()
-
-    #???
-    if not re.match(r"^RIDE-\d{5}$", ride_id):
-        record["status"] = "beyond_repair"
-        return record
-
-    if ride_id in _ride_ids_seen:
-        record["status"] = "beyond_repair"
-        return record
 
     _ride_ids_seen.add(ride_id)
     record["ride_id"] = ride_id
     return record
 
-
 def clean_bike_id(record: dict):
     # convert bike_id prefix to uppercase and validate the correct format (BIKE-4digits)
-    if record.get("status") == "beyond_repair":
-        return record
-
     bike_id = record.get("bike_id")
-
-    if not bike_id:
-        record["status"] = "beyond_repair"
-        return record
-
-    if not re.match(r"^[Bb][Ii][Kk][Ee]-\d{4}$", bike_id):
-        record["status"] = "beyond_repair"
-        return record
 
     record["bike_id"] = "BIKE-" + bike_id.split("-", 1)[1]
     return record
 
-
 def clean_user_type(record: dict):
     # convert user_type to lowercase and checks the correct format
-    if record.get("status") == "beyond_repair":
-        return record
-
     user_type = record.get("user_type")
 
-    if not user_type:
-        record["status"] = "beyond_repair"
-        return record
-
     user_type = user_type.lower()
-
-    if user_type not in utils.valid_user_types:
-        record["status"] = "beyond_repair"
-        return record
 
     record["user_type"] = user_type
     return record
 
-
 def clean_station(record: dict, station_key: str):
     # convert station name to titlecase and check the correct format, writing unknown stations as "suspicious"
-    if record.get("status") == "beyond_repair":
-        return record
-
     station = record.get(station_key)
-
-    if not station:
-        record["status"] = "beyond_repair"
-        return record
-
     station = station.title()
-
-    if not re.match(r"^[A-Za-z_]+$", station):
-        record["status"] = "beyond_repair"
-        return record
 
     record[station_key] = station
 
-    if station not in utils.dict_stations:
-        record["status"] = "suspicious"
-
     return record
 
 
-def clean_start_time(record: dict):
+def clean_time(record: dict, start_or_end: int):
     # normalize start_time to %Y-%m-%d %H:%M format
-    if record.get("status") == "beyond_repair":
-        return record
+    key = "start_time" if start_or_end == 0 else "end_time"
+    time_value = record.get(key)
 
-    start_time = record.get("start_time")
+    normalized = normalize_datetime(time_value)
 
-    if not start_time:
-        record["status"] = "beyond_repair"
-        return record
-
-    normalized = normalize_datetime(start_time)
-
-    if normalized is None:
-        record["status"] = "beyond_repair"
-        return record
-
-    record["start_time"] = normalized
+    record[key] = normalized
     return record
-
-
-def clean_end_time(record: dict):
-    # normalize end_time to %Y-%m-%d %H:%M format
-    if record.get("status") == "beyond_repair":
-        return record
-
-    end_time = record.get("end_time")
-
-    if not end_time:
-        record["status"] = "beyond_repair"
-        return record
-
-    normalized = normalize_datetime(end_time)
-
-    if normalized is None:
-        record["status"] = "beyond_repair"
-        return record
-
-    record["end_time"] = normalized
-    return record
-
 
 def clean_duration(record: dict):
     # checking for missing, non-numeric, negative, zero, or extremely long -> beyond_repair
-    if record.get("status") == "beyond_repair":
-        return record
-
     duration = record.get("duration_minutes")
-
-    if not duration:
-        record["status"] = "beyond_repair"
-        return record
-
-    if not re.match(r"^-?\d+(\.\d+)?$", duration):
-        record["status"] = "beyond_repair"
-        return record
 
     duration_val = float(duration)
 
-    if duration_val <= 0:
-        record["status"] = "beyond_repair"
+    if duration_val == 0:
+        record["status"] = "suspicious"
         return record
 
-    if duration_val > MAX_RIDE_DURATION_MINUTES:
-        record["status"] = "beyond_repair"
+    if duration_val > utils.MAX_RIDE_DURATION_MINUTES:
+        record["status"] = "suspicious"
         return record
 
     return record
@@ -411,43 +288,21 @@ def clean_duration(record: dict):
 
 def clean_distance(record: dict):
     # remove 'km' from distance_km field
-    # guard: missing, non-numeric, or negative -> beyond_repair
-    if record.get("status") == "beyond_repair":
-        return record
-
     distance = record.get("distance_km")
 
-    if not distance:
-        record["status"] = "beyond_repair"
-        return record
-
     distance = distance.lower().replace("km", "").strip()
-
-    if not re.match(r"^-?\d+(\.\d+)?$", distance):
-        record["status"] = "beyond_repair"
-        return record
-
-    if float(distance) < 0:
-        record["status"] = "beyond_repair"
-        return record
 
     record["distance_km"] = distance
     return record
 
 
 def check_cross_fields(record: dict):
-    # checking all fields together
-    if record.get("status") == "beyond_repair":
-        return record
-
+    # checking all fields together, check if the start or end time is greater than the current time
+    # also check if the recorded duration differes from the calculated distance by more than TOLERANCE_MIN
     start_time = _parse_datetime(record.get("start_time", ""))
     end_time   = _parse_datetime(record.get("end_time", ""))
 
-    if start_time is None or end_time is None:
-        record["status"] = "beyond_repair"
-        return record
-
-    if end_time <= start_time:
+    if end_time < start_time:
         record["status"] = "beyond_repair"
         return record
 
@@ -455,8 +310,8 @@ def check_cross_fields(record: dict):
 
     try:
         duration = float(record.get("duration_minutes", ""))
-        if abs(duration - timestamp_diff_in_minutes) > DURATION_TIMESTAMP_TOLERANCE_MIN:
-            record["status"] = "beyond_repair"
+        if abs(duration - timestamp_diff_in_minutes) > utils.DURATION_TIMESTAMP_TOLERANCE_MIN:
+            record["status"] = "suspicious"
             return record
     except (ValueError, TypeError):
         pass
@@ -464,16 +319,17 @@ def check_cross_fields(record: dict):
     try:
         distance  = float(record.get("distance_km", ""))
         speed_kph = (distance / timestamp_diff_in_minutes) * 60.0 if timestamp_diff_in_minutes > 0 else 0
-        if speed_kph < MIN_SPEED_KPH or speed_kph > MAX_SPEED_KPH:
+        if speed_kph < utils.MIN_SPEED_KPH or speed_kph > utils.MAX_SPEED_KPH:
             record["status"] = "suspicious"
     except (ValueError, TypeError):
         pass
 
+    # checks for overlapping rides for the same bike
     bike_id = record.get("bike_id", "")
     if bike_id:
         for existing_start, existing_end in _bike_intervals.get(bike_id, []):
             if start_time < existing_end and end_time > existing_start:
-                record["status"] = "beyond_repair"
+                record["status"] = "suspicious"
                 return record
         _bike_intervals.setdefault(bike_id, []).append((start_time, end_time))
 
@@ -483,9 +339,6 @@ def check_cross_fields(record: dict):
 def normalize_datetime(value: str):
     # try to parse datetime with various formats and return in %Y-%m-%d %H:%M format
     # returns None if no format matches (instead of silently returning original)
-    if not value:
-        return None
-
     value = value.replace(" ", "")
     value = value[:10] + " " + value[10:]
 
