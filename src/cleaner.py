@@ -192,7 +192,7 @@ def check_cross_fields(record: dict):
     try:
         duration = float(record.get("duration_minutes", ""))
         if abs(duration - timestamp_diff_in_minutes) > utils.DURATION_TIMESTAMP_TOLERANCE_MIN:
-            record["status"] = "suspicious"
+            record["status"] = "beyond_repair"
             return record
     except (ValueError, TypeError):
         pass

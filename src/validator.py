@@ -35,7 +35,9 @@ def validate_records(csv_input: str):
 
     # Second pass: validate and write back with status column
     with open(csv_input, "w", newline="") as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames + ["status"])
+        if "status" not in fieldnames:
+            fieldnames.append("status")
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
 
         for idx, row in enumerate(rows):
@@ -195,6 +197,9 @@ def validate_duration(record: dict) -> int:
     if float(value) < 0:
         return VALIDATION_STATUS["beyond_repair"]
 
+    if float(value) == 0:
+        needs_cleaning = True
+
     return VALIDATION_STATUS["needs_cleaning"] if needs_cleaning else VALIDATION_STATUS["clean"]
 
 
@@ -219,7 +224,7 @@ def validate_distance(record: dict) -> int:
         if not digit.isdigit() and digit != "-" and digit != ".":
             return VALIDATION_STATUS["beyond_repair"]
 
-    if float(value) < 0:
+    if float(value) < 0 or (float(value) == 0 and value.lstrip().startswith("-")):
         return VALIDATION_STATUS["beyond_repair"]
 
     return VALIDATION_STATUS["needs_cleaning"] if needs_cleaning else VALIDATION_STATUS["clean"]

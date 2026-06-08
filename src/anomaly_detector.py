@@ -4,6 +4,7 @@
 
 import csv
 import utils
+from datetime import datetime
 
 def detect_bike_overlap(records):
     """
@@ -52,7 +53,7 @@ def detect_bike_overlap(records):
                     "ride2_id": rides[i + 1]["ride_id"],
                     "ride1_end_time": current_end,
                     "ride2_start_time": next_start,
-                    "overlap_minutes": (utils.parse_datetime(next_start) - utils.parse_datetime(current_end)).total_seconds() / 60
+                    "overlap_minutes": (datetime.strptime(next_start, utils.DATETIME_FMT) - datetime.strptime(current_end, utils.DATETIME_FMT)).total_seconds() / 60
                 })
     
     return {
@@ -179,16 +180,19 @@ def detect_zero_duration(records):
         dict: Dictionary with 'zero_duration_rides' list
     """
     zero_duration_rides = []
-    
+
     for record in records:
-        duration = record.get("duration_minutes", 0)
+        try:
+            duration = float(record.get("duration_minutes", 1))  # default non-zero to skip safely
+        except (ValueError, TypeError):
+            continue
+
         start_station = record.get("start_station", "")
         end_station = record.get("end_station", "")
-        
-        # Only flag as suspicious if duration is 0 AND stations are different
+
         if duration == 0 and start_station != end_station:
             zero_duration_rides.append(record)
-    
+
     return {
         "zero_duration_rides": zero_duration_rides,
         "count": len(zero_duration_rides)
@@ -390,9 +394,11 @@ def detect_unknown_stations(records):
     for record in records:
         start_station = record.get("start_station", "").strip()
         end_station = record.get("end_station", "").strip()
-        if not start_station or not end_station:
-            unknown_station_records.append(record)
-    
+        if start_station not in utils.dict_stations:
+            unknown_station_records.append(start_station)
+        if end_station not in utils.dict_stations:
+            unknown_station_records.append(end_station)
+        
     return {
         "unknown_station_records": unknown_station_records,
         "total_unknown_stations": len(unknown_station_records)
@@ -418,7 +424,7 @@ def analyze_anomalies(input_file="data/bike_rides_cleaned.csv"):
     results = {}
     
     print("  - Detecting bike overlaps...")
-    results["bike_overlaps"] = detect_bike_overlaps(records)
+    results["bike_overlaps"] = detect_bike_overlap(records)
 
     print("  - Detecting station spikes...")
     results["station_spike"] = detect_station_spike(records)
@@ -427,7 +433,7 @@ def analyze_anomalies(input_file="data/bike_rides_cleaned.csv"):
     results["route_spike"] = detect_route_spike(records)
 
     print("  - Detecting zero duration rides...")
-    results["zero_duration"] = detect_zero_duration_rides(records)
+    results["zero_duration"] = detect_zero_duration(records)
     
     print("  - Detecting strange distance/duration combinations...")
     results["strange_distance_duration"] = detect_strange_distance_duration(records)
@@ -447,182 +453,3 @@ def analyze_anomalies(input_file="data/bike_rides_cleaned.csv"):
     print("Anomaly detection complete.")
     
     return results
-
-
-# def generate_anomaly_report(results, output_file="reports/anomaly_report.txt"):
-#     """
-#     Generate a readable anomaly report for the City Mobility Operations Analyst.
-    
-#     Args:
-#         results: Dictionary containing all anomaly detection results
-#         output_file: Path to write the report
-#     """
-#     with open(output_file, "w") as f:
-#         f.write("=" * 60 + "\n")
-#         f.write("CITY BIKE RIDE ANOMALY REPORT\n")
-#         f.write("=" * 60 + "\n\n")
-        
-#         # Station Spike Anomalies
-#         f.write("STATION SPIKE ANOMALIES\n")
-#         f.write("-" * 40 + "\n")
-#         station_spike = results.get("station_spike", {})
-        
-#         f.write(f"Average start station usage: {station_spike.get('avg_start_usage', 0):.2f} rides\n")
-#         f.write(f"Average end station usage: {station_spike.get('avg_end_usage', 0):.2f} rides\n\n")
-        
-#         spiked_start = station_spike.get("spiked_start_stations", [])
-#         if spiked_start:
-#             f.write("Start stations with unusual spikes (>3x average):\n")
-#             for station in spiked_start:
-#                 f.write(f"  - {station['station']}: {station['count']} rides (ratio: {station['ratio']:.2f}x)\n")
-#         else:
-#             f.write("No start station spikes detected.\n")
-        
-#         f.write("\n")
-        
-#         spiked_end = station_spike.get("spiked_end_stations", [])
-#         if spiked_end:
-#             f.write("End stations with unusual spikes (>3x average):\n")
-#             for station in spiked_end:
-#                 f.write(f"  - {station['station']}: {station['count']} rides (ratio: {station['ratio']:.2f}x)\n")
-#         else:
-#             f.write("No end station spikes detected.\n")
-        
-#         f.write("\n\n")
-        
-#         # Route Spike Anomalies
-#         f.write("ROUTE SPIKE ANOMALIES\n")
-#         f.write("-" * 40 + "\n")
-#         route_spike = results.get("route_spike", {})
-        
-#         f.write(f"Average route usage: {route_spike.get('avg_route_usage', 0):.2f} rides\n")
-#         f.write(f"Total unique routes: {route_spike.get('total_routes', 0)}\n\n")
-        
-#         spiked_routes = route_spike.get("spiked_routes", [])
-#         if spiked_routes:
-#             f.write("Routes with unusual spikes (>3x average):\n")
-#             for route in spiked_routes[:10]:  # Top 10
-#                 f.write(f"  - {route['route']}: {route['count']} rides (ratio: {route['ratio']:.2f}x)\n")
-#         else:
-#             f.write("No route spikes detected.\n")
-        
-#         f.write("\n\n")
-        
-#         # Strange Distance/Duration Combinations
-#         f.write("STRANGE DISTANCE/DURATION COMBINATIONS\n")
-#         f.write("-" * 40 + "\n")
-#         strange_combo = results.get("strange_distance_duration", {})
-        
-#         total_suspicious = strange_combo.get("total_suspicious", 0)
-#         f.write(f"Total suspicious combinations: {total_suspicious}\n\n")
-        
-#         suspicious = strange_combo.get("suspicious_combinations", [])
-#         if suspicious:
-#             f.write("Sample suspicious records:\n")
-#             for record in suspicious[:10]:  # Show first 10
-#                 f.write(f"  - Ride {record['ride_id']}: {record['type']}\n")
-#                 f.write(f"    Distance: {record['distance_km']} km, Duration: {record['duration_minutes']} min\n")
-#                 f.write(f"    Speed: {record['speed_kph']:.2f} km/h\n")
-#         else:
-#             f.write("No strange distance/duration combinations detected.\n")
-        
-#         f.write("\n\n")
-        
-#         # Bikes with Most Suspicious Records
-#         f.write("BIKES WITH MOST SUSPICIOUS RECORDS\n")
-#         f.write("-" * 40 + "\n")
-#         bikes_suspicious = results.get("bikes_with_suspicious", {})
-        
-#         f.write(f"Total bikes with suspicious records: {bikes_suspicious.get('total_bikes_with_suspicious', 0)}\n\n")
-        
-#         top_bikes = bikes_suspicious.get("top_suspicious_bikes", [])
-#         if top_bikes:
-#             f.write("Top 5 bikes by suspicious record count:\n")
-#             for bike in top_bikes:
-#                 f.write(f"  - {bike['bike_id']}: {bike['suspicious_count']} suspicious records\n")
-#         else:
-#             f.write("No bikes with suspicious records detected.\n")
-        
-#         f.write("\n\n")
-        
-#         # Stations with Most Suspicious Records
-#         f.write("STATIONS WITH MOST SUSPICIOUS RECORDS\n")
-#         f.write("-" * 40 + "\n")
-#         stations_suspicious = results.get("stations_with_suspicious", {})
-        
-#         top_start = stations_suspicious.get("top_suspicious_start_stations", [])
-#         if top_start:
-#             f.write("Top 5 start stations by suspicious record count:\n")
-#             for station in top_start:
-#                 f.write(f"  - {station['station']}: {station['suspicious_count']} suspicious records\n")
-#         else:
-#             f.write("No start stations with suspicious records.\n")
-        
-#         f.write("\n")
-        
-#         top_end = stations_suspicious.get("top_suspicious_end_stations", [])
-#         if top_end:
-#             f.write("Top 5 end stations by suspicious record count:\n")
-#             for station in top_end:
-#                 f.write(f"  - {station['station']}: {station['suspicious_count']} suspicious records\n")
-#         else:
-#             f.write("No end stations with suspicious records.\n")
-        
-#         f.write("\n\n")
-        
-#         # Duplicate Ride IDs
-#         f.write("DUPLICATE RIDE IDs\n")
-#         f.write("-" * 40 + "\n")
-#         duplicates = results.get("duplicate_ride_ids", {})
-        
-#         total_duplicates = duplicates.get("total_duplicates", 0)
-#         f.write(f"Total duplicate ride IDs: {total_duplicates}\n\n")
-        
-#         duplicate_list = duplicates.get("duplicate_ride_ids", [])
-#         if duplicate_list:
-#             f.write("Duplicate ride IDs:\n")
-#             for dup in duplicate_list[:10]:  # Show first 10
-#                 f.write(f"  - {dup['ride_id']}: {dup['count']} occurrences\n")
-#         else:
-#             f.write("No duplicate ride IDs detected.\n")
-        
-#         f.write("\n\n")
-        
-#         # Summary and Recommendations
-#         f.write("=" * 60 + "\n")
-#         f.write("SUMMARY AND RECOMMENDATIONS\n")
-#         f.write("=" * 60 + "\n\n")
-        
-#         recommendations = []
-        
-#         if spiked_start or spiked_end:
-#             recommendations.append("- Investigate stations with usage spikes - may indicate special events or data issues")
-        
-#         if spiked_routes:
-#             recommendations.append("- Review spiked routes - may reveal popular commute patterns or data collection problems")
-        
-#         if total_suspicious > 0:
-#             recommendations.append(f"- Review {total_suspicious} records with impossible distance/duration combinations")
-        
-#         if top_bikes:
-#             recommendations.append("- Check bikes with high suspicious record counts for sensor or checkout system issues")
-        
-#         if top_start or top_end:
-#             recommendations.append("- Investigate stations with high suspicious record involvement for data collection problems")
-        
-#         if total_duplicates > 0:
-#             recommendations.append(f"- Resolve {total_duplicates} duplicate ride IDs to prevent double-counting in reports")
-        
-#         if recommendations:
-#             f.write("Recommended Actions:\n")
-#             for rec in recommendations:
-#                 f.write(f"{rec}\n")
-#         else:
-#             f.write("No significant anomalies detected. Data quality appears good.\n")
-        
-#         f.write("\n")
-#         f.write("=" * 60 + "\n")
-#         f.write("End of Report\n")
-#         f.write("=" * 60 + "\n")
-    
-#     print(f"Anomaly report generated -> {output_file}")
