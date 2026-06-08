@@ -8,7 +8,6 @@ from datetime import datetime
 
 def detect_bike_overlap(records):
     """
-    Anomaly Rule 8: Bike Overlap
     The same bike is used for two rides that overlap in time.
     
     Why it matters:
@@ -62,9 +61,9 @@ def detect_bike_overlap(records):
         "total_rides_checked": sum(len(rides) for rides in bike_rides.values())
     }
 
+
 def detect_station_spike(records):
     """
-    Anomaly Rule 7: Suspicious Station Spike
     A station has much higher usage than most stations.
     Flags stations with more than 3 times the average usage.
     
@@ -123,7 +122,6 @@ def detect_station_spike(records):
 
 def detect_route_spike(records):
     """
-    Anomaly Rule 8: Suspicious Route Spike
     A route appears much more often than normal.
     Counts each (start_station, end_station) pair and flags unusually high counts.
     
@@ -166,9 +164,9 @@ def detect_route_spike(records):
         "total_routes": total_routes
     }
 
+
 def detect_zero_duration(records):
     """
-    Anomaly Rule 10: Zero Duration
     A ride has a duration of 0 minutes.
     
     Why it matters:
@@ -198,24 +196,55 @@ def detect_zero_duration(records):
         "count": len(zero_duration_rides)
     }
 
-# def detect_duration_not_equal_with_timestamp(records):
-#     """
-#     Anomaly Rule 11: Duration Not Equal with Timestamp
-#     The duration calculated from timestamps does not match the recorded duration, but is still within the tolerance
-#     otherwise it would still be "beyond repair".
-#     Records with this behaviour where flagged as "suspicious", now we put them in the dict 
+def detect_duration_not_equal_with_timestamp(records):
+    """
+    The duration calculated from timestamps does not match the recorded duration, but is still within the tolerance
+    otherwise it would still be "beyond repair".
+    Records with this behaviour where flagged as "suspicious", now we put them in the dict 
     
-#     Why it matters:
-#     This could indicate a data entry error or a system issue.
+    Why it matters:
+    This could indicate a data entry error or a system issue.
     
-#     Returns:
-#         dict: Dictionary with 'duration_mismatch_records' list
-#     """
+    Returns:
+        dict: Dictionary with 'duration_mismatch_records' list
+    """
+    duration_mismatch_records = []
+
+    for record in records:
+        start = record.get("start_time", "")
+        end = record.get("end_time", "")
+        dur = record.get("duration_minutes", "")
+
+        if not start or not end or not dur:
+            continue
+
+        try:
+            start_dt = datetime.strptime(start, utils.DATETIME_FMT)
+            end_dt = datetime.strptime(end, utils.DATETIME_FMT)
+            recorded = float(dur)
+        except (ValueError, TypeError):
+            continue
+
+        calculated = (end_dt - start_dt).total_seconds() / 60.0
+        diff = abs(recorded - calculated)
+
+        if 0 < diff <= utils.DURATION_TIMESTAMP_TOLERANCE_MIN:
+            duration_mismatch_records.append({
+                "ride_id": record.get("ride_id"),
+                "recorded_duration": recorded,
+                "calculated_duration": round(calculated, 2),
+                "diff_minutes": round(diff, 2),
+                "status": record.get("status"),
+            })
+
+    return {
+        "duration_mismatch_records": duration_mismatch_records,
+        "count": len(duration_mismatch_records),
+    }
     
 
 def detect_strange_distance_duration(records):
     """
-    Anomaly Rule 9: Strange Distance and Duration Combination
     Examples:
     - Ride distance is above 20 km but duration is under 5 minutes
     - Ride distance is below 0.2 km but duration is above 120 minutes
@@ -344,7 +373,6 @@ def detect_stations_with_most_suspicious_records(records):
 
 def detect_duplicate_ride_ids(records):
     """
-    Anomaly Rule 1: Duplicate Ride ID
     The same ride_id appears more than once.
     
     Why it matters:
@@ -378,9 +406,9 @@ def detect_duplicate_ride_ids(records):
         "total_duplicates": len(duplicates)
     }
 
+
 def detect_unknown_stations(records):
     """
-    Anomaly Rule 11: Unknown Stations
     The start or end station is unknown or empty.
     
     Why it matters:
@@ -434,6 +462,9 @@ def analyze_anomalies(input_file="data/bike_rides_cleaned.csv"):
 
     print("  - Detecting zero duration rides...")
     results["zero_duration"] = detect_zero_duration(records)
+
+    print("  - Detecting duration/timestamp mismatches...")
+    results["duration_mismatch"] = detect_duration_not_equal_with_timestamp(records)
     
     print("  - Detecting strange distance/duration combinations...")
     results["strange_distance_duration"] = detect_strange_distance_duration(records)

@@ -255,6 +255,25 @@ def _build_anomaly_report(anomalies: dict) -> str:
     else:
         lines.append("  ✓ No zero-duration rides with mismatched stations.")
 
+    # ── Duration Mismatch with Timestamps ──────────────────────────────────────────────────
+    dm = anomalies.get("duration_mismatch", {})
+    dm_count = dm.get("count", 0)
+    lines.append(_section("3b. Duration / Timestamp Mismatches  (within tolerance)"))
+    lines.append(f"  Records where recorded ≠ calculated duration : {_fmt_num(dm_count)}")
+    if dm_count:
+        lines.append("  Sample records:")
+        for r in dm.get("duration_mismatch_records", [])[:6]:
+            lines.append(
+                f"    {r['ride_id']}  recorded {r['recorded_duration']} min  "
+                f"vs calculated {r['calculated_duration']} min  "
+                f"(Δ {r['diff_minutes']} min)  [{r['status']}]"
+            )
+        recommendations.append(
+            "- Duration/timestamp mismatches within tolerance suggest clock drift or manual entry rounding; audit data collection at source."
+        )
+    else:
+        lines.append("  ✓ All recorded durations match their timestamps.")
+
     # ── Strange Distance / Duration ──────────────────────────────────────────
     sdd = anomalies.get("strange_distance_duration", {})
     sdd_count = sdd.get("total_suspicious", 0)
