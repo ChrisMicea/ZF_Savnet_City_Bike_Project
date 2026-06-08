@@ -165,7 +165,6 @@ def clean_duration(record: dict):
 
     return record
 
-
 def clean_distance(record: dict):
     # remove 'km' from distance_km field
     distance = record.get("distance_km")
