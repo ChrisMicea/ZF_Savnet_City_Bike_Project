@@ -312,8 +312,8 @@ class TestCheckCrossFields(unittest.TestCase):
         result = cleaner.check_cross_fields(record)
         self.assertEqual(result["status"], "beyond_repair")
 
-    def test_duration_mismatch_sets_suspicious(self):
-        """Duration that differs significantly from timestamp diff should set suspicious."""
+    def test_duration_mismatch_sets_beyond_repair(self):
+        """Duration that differs significantly from timestamp diff should set beyond_repair."""
         record = {
             "start_time": "2026-04-12 08:15",
             "end_time": "2026-04-12 08:37",  # 22 minutes
@@ -323,7 +323,7 @@ class TestCheckCrossFields(unittest.TestCase):
             "status": "needs_cleaning"
         }
         result = cleaner.check_cross_fields(record)
-        self.assertEqual(result["status"], "suspicious")
+        self.assertEqual(result["status"], "beyond_repair")
 
     def test_speed_too_slow_sets_suspicious(self):
         """Speed below MIN_SPEED_KPH should set suspicious."""

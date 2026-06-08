@@ -18,7 +18,13 @@ DURATION_TIMESTAMP_TOLERANCE_MIN = 5
 DATETIME_FMT = "%Y-%m-%d %H:%M"
 ANALYSIS_STATUSES = {"clean", "fixed", "suspicious"}
 DAY_NAMES = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-SPIKE_THRESHOLD_MULTIPLIER = 1.3
+
+ROUTE_SPIKE_THRESHOLD_MULTIPLIER = 1.2
+STATION_SPIKE_THRESHOLD_MULTIPLIER = 1.2
+MAX_DISTANCE_FOR_SHORT_RIDE = 20.0
+MIN_DURATION_FOR_LONG_RIDE = 5.0
+MIN_DISTANCE_FOR_LONG_RIDE = 0.2
+MAX_DURATION_FOR_SHORT_RIDE = 120.0 
 
 dict_stations = {'Central_Station': 1, 'Tech_District': 2, 'River_Park': 3, 'Downtown_Plaza': 4, 'East_Terminal': 5, 'West_End': 6, 'University': 7, 'South_Gardens': 8, 'City_Hall': 9, 'North_Market': 10}
 valid_user_types = {"member", "casual", "tourist"}

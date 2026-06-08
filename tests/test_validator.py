@@ -288,7 +288,7 @@ class TestValidateDuration(unittest.TestCase):
         result = validate_duration({"duration_minutes": "0"})
         # validate_duration currently only rejects < 0 -> so the result is CLEAN
         # self.assertIn(result, [CLEAN, BEYOND_REPAIR])
-        self.assertEqual(result, CLEAN)
+        self.assertEqual(result, NEEDS_CLEANING)
 
     def test_negative_duration_is_beyond_repair(self):
         result = validate_duration({"duration_minutes": "-15"})

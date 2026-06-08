@@ -95,19 +95,17 @@ def detect_station_spike(records):
     print("average_start_usage:", average_start_usage)
     print("average_end_usage:", average_end_usage)
 
-    # Flag stations with >3x average usage
-    SPIKE_THRESHOLD = 3.0
     
     spiked_start_stations = [
         {"station": station, "count": count, "avg": average_start_usage, "ratio": count / average_start_usage if average_start_usage > 0 else 0}
         for station, count in start_station_counts.items()
-        if count > average_start_usage * SPIKE_THRESHOLD
+        if count > average_start_usage * utils.STATION_SPIKE_THRESHOLD_MULTIPLIER
     ]
     
     spiked_end_stations = [
         {"station": station, "count": count, "avg": average_end_usage, "ratio": count / average_end_usage if average_end_usage > 0 else 0}
         for station, count in end_station_counts.items()
-        if count > average_end_usage * SPIKE_THRESHOLD
+        if count > average_end_usage * utils.STATION_SPIKE_THRESHOLD_MULTIPLIER
     ]
     
     return {
@@ -146,13 +144,10 @@ def detect_route_spike(records):
     total_routes = len(route_counts)
     average_route_usage = sum(route_counts.values()) / total_routes if total_routes > 0 else 0
     
-    # Flag routes with >3x average usage
-    SPIKE_THRESHOLD = 3.0
-    
     spiked_routes = [
         {"route": route, "count": count, "avg": average_route_usage, "ratio": count / average_route_usage if average_route_usage > 0 else 0}
         for route, count in route_counts.items()
-        if count > average_route_usage * SPIKE_THRESHOLD
+        if count > average_route_usage * utils.ROUTE_SPIKE_THRESHOLD_MULTIPLIER
     ]
     
     # Sort by count descending
@@ -257,10 +252,7 @@ def detect_strange_distance_duration(records):
     """
     suspicious_combinations = []
     
-    MAX_DISTANCE_FOR_SHORT_RIDE = 20.0  # km
-    MIN_DURATION_FOR_LONG_RIDE = 5.0    # minutes
-    MIN_DISTANCE_FOR_LONG_RIDE = 0.2    # km
-    MAX_DURATION_FOR_SHORT_RIDE = 120.0  # minutes
+
     
     for record in records:
         try:
@@ -268,7 +260,7 @@ def detect_strange_distance_duration(records):
             duration = float(record.get("duration_minutes", ""))
             
             # Check: High distance with very short duration
-            if distance > MAX_DISTANCE_FOR_SHORT_RIDE and duration < MIN_DURATION_FOR_LONG_RIDE:
+            if distance > utils.MAX_DISTANCE_FOR_SHORT_RIDE and duration < utils.MIN_DURATION_FOR_LONG_RIDE:
                 suspicious_combinations.append({
                     "ride_id": record.get("ride_id", ""),
                     "type": "high_distance_short_duration",
@@ -278,7 +270,7 @@ def detect_strange_distance_duration(records):
                 })
             
             # Check: Very low distance with very long duration
-            elif distance < MIN_DISTANCE_FOR_LONG_RIDE and duration > MAX_DURATION_FOR_SHORT_RIDE:
+            elif distance < utils.MIN_DISTANCE_FOR_LONG_RIDE and duration > utils.MAX_DURATION_FOR_SHORT_RIDE:
                 suspicious_combinations.append({
                     "ride_id": record.get("ride_id", ""),
                     "type": "low_distance_long_duration",
