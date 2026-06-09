@@ -2,6 +2,7 @@ import validator
 import cleaner
 import analyzer
 import reporter
+from pdf_reporter import generate_pdf_report
 from anomaly_detector import analyze_anomalies
 
 def main():
@@ -11,6 +12,7 @@ def main():
     analysis  = analyzer.analyze(cleaned_data)
     print(analysis)
     reporter.generate_reports(analysis, anomalies, quiet=True)
+    generate_pdf_report(analysis, anomalies)
 
 
 if __name__ == "__main__":
