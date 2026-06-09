@@ -27,7 +27,9 @@ def generate_ride(ride_id):
     end_station = random.choice(list(utils.dict_stations.keys()))
     
     start_time = datetime.now() - timedelta(
-        days=random.randint(0, 365)
+        days=random.randint(0, 365),
+        hours=random.randint(0, 23),
+        minutes=random.randint(0, 59)
     )
     distance= round(random.uniform(-2.0, 20.0), 2)
     distance= str(distance)

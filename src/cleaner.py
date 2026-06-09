@@ -25,11 +25,14 @@ from datetime import datetime
 import utils
 import validator
 
+
 validator.VALIDATION_STATUS["fixed"] = 4
 validator.VALIDATION_STATUS_FOR_WRITE[4] = "fixed"
 
+
 _ride_ids_seen  = set()
 _bike_intervals = {} 
+
 
 def clean_data(input_file="data/bike_rides.csv", output_file="data/bike_rides_cleaned.csv") -> list[dict]:
     with open(input_file, "r") as infile:
@@ -83,6 +86,7 @@ def clean_data(input_file="data/bike_rides.csv", output_file="data/bike_rides_cl
 
     return cleaned_rows
 
+
 def _parse_datetime(value: str):
     # accept formats, return datetime or None
     if not value:
@@ -115,12 +119,14 @@ def clean_ride_id(record: dict):
     record["ride_id"] = ride_id
     return record
 
+
 def clean_bike_id(record: dict):
     # convert bike_id prefix to uppercase and validate the correct format (BIKE-4digits)
     bike_id = record.get("bike_id")
 
     record["bike_id"] = "BIKE-" + bike_id.split("-", 1)[1]
     return record
+
 
 def clean_user_type(record: dict):
     # convert user_type to lowercase and checks the correct format
@@ -130,6 +136,7 @@ def clean_user_type(record: dict):
 
     record["user_type"] = user_type
     return record
+
 
 def clean_station(record: dict, station_key: str):
     # convert station name to titlecase and check the correct format, writing unknown stations as "suspicious"
@@ -151,6 +158,7 @@ def clean_time(record: dict, start_or_end: int):
     record[key] = normalized
     return record
 
+
 def clean_duration(record: dict):
     # checking for missing, non-numeric, negative, zero, or extremely long -> beyond_repair
     duration = record.get("duration_minutes")
@@ -166,6 +174,7 @@ def clean_duration(record: dict):
         return record
 
     return record
+
 
 def clean_distance(record: dict):
     # remove 'km' from distance_km field

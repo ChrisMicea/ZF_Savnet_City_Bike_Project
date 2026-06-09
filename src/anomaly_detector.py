@@ -191,6 +191,7 @@ def detect_zero_duration(records):
         "count": len(zero_duration_rides)
     }
 
+
 def detect_duration_not_equal_with_timestamp(records):
     """
     The duration calculated from timestamps does not match the recorded duration, but is still within the tolerance
@@ -423,6 +424,7 @@ def detect_unknown_stations(records):
         "unknown_station_records": unknown_station_records,
         "total_unknown_stations": len(unknown_station_records)
     }
+
 
 def analyze_anomalies(input_file="data/bike_rides_cleaned.csv"):
     """
