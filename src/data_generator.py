@@ -128,6 +128,7 @@ def create_invalid_station_names(ride):
     
     return ride
 
+
 def inconsistent_name_formating(ride):
     start_station = ride[3]
     end_station = ride[4]
@@ -150,6 +151,7 @@ def inconsistent_name_formating(ride):
     ride[4] = new_end_station
 
     return ride
+
 
 def invalid_bike_ids(ride):
     bike_id = ride[1]
@@ -175,6 +177,7 @@ def invalid_durations(ride):
     ride[7] = ""
     return ride
 
+
 def inconsistent_user_type_capitalization(ride):
     user_type = ride[2]
     
@@ -187,6 +190,7 @@ def inconsistent_user_type_capitalization(ride):
     
     ride[2] = new_user_type
     return ride
+
 
 def create_dataset(filename, num_rows):
     with open(filename, "w", newline="") as file:

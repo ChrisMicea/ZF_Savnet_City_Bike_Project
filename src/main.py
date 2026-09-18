@@ -10,7 +10,7 @@ def main():
     cleaned_data = cleaner.clean_data("data/bike_rides.csv", "data/bike_rides_cleaned.csv")
     anomalies = analyze_anomalies()
     analysis  = analyzer.analyze(cleaned_data)
-    print(analysis)
+    # print(analysis)
     reporter.generate_reports(analysis, anomalies, quiet=True)
     generate_pdf_report(analysis, anomalies)
 
